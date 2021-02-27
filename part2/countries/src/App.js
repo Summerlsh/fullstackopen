@@ -16,7 +16,7 @@ const CountryDetail = ({country}) => {
   )
 }
 
-const Countries = ({countries, filter}) => {
+const Countries = ({countries, filter, setFilter}) => {
   const filteredCountries = countries.filter(country => country.name.toLowerCase().includes(filter.toLowerCase()))
 
   if (filteredCountries.length > 10) {
@@ -30,7 +30,7 @@ const Countries = ({countries, filter}) => {
       {filteredCountries.map(country => (
         <div key={country.name}>
           {country.name}
-          <button>show</button>
+          <button onClick={() => setFilter(country.name)}>show</button>
         </div>
       ))}
     </div>
@@ -52,7 +52,7 @@ const App = () => {
   return (
     <div>
       find countries <input value={keyword} onChange={event => setKeyword(event.target.value)}/>
-      <Countries countries={countries} filter={keyword}/>
+      <Countries countries={countries} filter={keyword} setFilter={setKeyword}/>
     </div>
   )
 }
