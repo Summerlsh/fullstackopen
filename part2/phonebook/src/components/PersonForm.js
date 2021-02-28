@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import personService from '../services/persons'
 
 const PersonForm = ({persons, setPersons}) => {
   const [newName, setNewName] = useState('')
@@ -6,17 +7,31 @@ const PersonForm = ({persons, setPersons}) => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    if (persons.find(person => person.name === newName)) {
-      alert(`${newName} is already added to phonebook`)
-      return
+    // 查找是不是有重复的人
+    const found = persons.find(person => person.name === newName)
+    if (found) {
+      // 有则修改
+      if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+        const newPerson = {...found, number: newNumber}
+        personService.updatePerson(newPerson).then(returnedPerson => {
+          setPersons(persons.map(p => p.id !== newPerson.id ? p : returnedPerson))
+          setNewName('')
+          setNewNumber('')
+        })
+      }
+    } else {
+      // 没有则新增
+      const newPerson = {
+        name: newName,
+        number: newNumber
+      }
+
+      personService.addPerson(newPerson).then(returnedPerson => {
+        setPersons(persons.concat(returnedPerson))
+        setNewName('')
+        setNewNumber('')
+      })
     }
-    const newPerson = {
-      name: newName,
-      number: newNumber
-    }
-    setPersons(persons.concat(newPerson))
-    setNewName('')
-    setNewNumber('')
   }
 
 
