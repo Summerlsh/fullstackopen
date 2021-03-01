@@ -3,6 +3,7 @@ const cors = require('cors')
 const morgan = require('morgan')
 
 const app = express()
+app.use(express.static('build'))
 app.use(cors())
 app.use(express.json())
 
@@ -35,10 +36,6 @@ let persons = [
     number: '39-23-6423122'
   }
 ]
-
-app.get('/', (req, res) => {
-  res.redirect('/info')
-})
 
 app.get('/api/persons', ((req, res) => {
   res.json(persons)
