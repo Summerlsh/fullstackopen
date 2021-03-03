@@ -10,9 +10,9 @@ app.use(express.static('build'))
 app.use(cors())
 app.use(express.json())
 
-morgan.token('body', (req, res) => {
+morgan.token('body', req => {
   if (req.method === 'POST' && req.body) {
-    return JSON.stringify({name: req.body.name, number: req.body.number})
+    return JSON.stringify({ name: req.body.name, number: req.body.number })
   }
 })
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
@@ -52,7 +52,7 @@ app.put('/api/persons/:id', (req, res, next) => {
     number: req.body.number
   }
 
-  Person.findByIdAndUpdate(req.params.id, newPerson, {new: true, runValidators: true, context: 'query'})
+  Person.findByIdAndUpdate(req.params.id, newPerson, { new: true, runValidators: true, context: 'query' })
     .then(returnedPerson => {
       if (returnedPerson) {
         res.json(returnedPerson)
@@ -65,14 +65,14 @@ app.put('/api/persons/:id', (req, res, next) => {
 
 app.delete('/api/persons/:id', (req, res, next) => {
   Person.findByIdAndRemove(req.params.id)
-    .then(result => {
+    .then(() => {
       res.status(204).end()
     })
     .catch(err => next(err))
 })
 
 app.post('/api/persons', (req, res, next) => {
-  const {name, number} = req.body
+  const { name, number } = req.body
 
   const person = new Person({
     name,
@@ -87,7 +87,7 @@ app.post('/api/persons', (req, res, next) => {
 })
 
 const unknownEndpoint = (req, res) => {
-  res.status(404).send({error: 'unknown endpoint'})
+  res.status(404).send({ error: 'unknown endpoint' })
 }
 
 app.use(unknownEndpoint)
@@ -95,9 +95,9 @@ app.use(unknownEndpoint)
 const errorHandler = (err, req, res, next) => {
   console.log(err.message)
   if (err.name === 'CastError' && err.kind === 'ObjectId') {
-    res.status(400).send({error: 'malformatted id'})
+    res.status(400).send({ error: 'malformatted id' })
   } else if (err.name === 'ValidationError') {
-    res.status(400).send({error: err.message})
+    res.status(400).send({ error: err.message })
   }
 
   next(err)

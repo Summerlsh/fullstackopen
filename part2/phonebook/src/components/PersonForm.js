@@ -44,7 +44,6 @@ const PersonForm = ({persons, setPersons, setMessage}) => {
             setTimeout(() => setMessage({text: '', type: ''}), 5000)
           }
           if (error.response.status === 400) {
-            console.log(error.response)
             const data = error.response.data
             setMessage({
               text: data.error,

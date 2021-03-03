@@ -11,7 +11,7 @@ mongoose.connect(url, {
   useFindAndModify: false,
   useCreateIndex: true
 })
-  .then(res => {
+  .then(() => {
     console.log('connected to mongodb')
   })
   .catch(err => {
