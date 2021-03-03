@@ -23,12 +23,16 @@ const PersonForm = ({persons, setPersons, setMessage}) => {
 
     if (found) {
       // 有则修改
-      const newPerson = {...found, number: newNumber}
+      const id = found.id
+      const newPerson = {
+        name: found.name,
+        number: newNumber
+      }
 
       if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
-        personService.updatePerson(newPerson).then(resp => {
+        personService.updatePerson(id, newPerson).then(resp => {
           const returnedPerson = resp.data
-          setPersons(persons.map(p => p.id !== newPerson.id ? p : returnedPerson))
+          setPersons(persons.map(p => p.id !== id ? p : returnedPerson))
           successCallback()
         }).catch(error => {
           if (error.response.status === 404) {
@@ -37,7 +41,15 @@ const PersonForm = ({persons, setPersons, setMessage}) => {
               text: `Information of ${newName} has already been removed from server`,
               type: 'error'
             })
-            // 5 秒后清除消息
+            setTimeout(() => setMessage({text: '', type: ''}), 5000)
+          }
+          if (error.response.status === 400) {
+            console.log(error.response)
+            const data = error.response.data
+            setMessage({
+              text: data.error,
+              type: 'error'
+            })
             setTimeout(() => setMessage({text: '', type: ''}), 5000)
           }
         })
@@ -49,10 +61,19 @@ const PersonForm = ({persons, setPersons, setMessage}) => {
         number: newNumber
       }
 
-      personService.addPerson(newPerson).then(returnedPerson => {
-        setPersons(persons.concat(returnedPerson))
-        successCallback()
-      })
+      personService.addPerson(newPerson)
+        .then(returnedPerson => {
+          setPersons(persons.concat(returnedPerson))
+          successCallback()
+        })
+        .catch(err => {
+          const data = err.response.data
+          setMessage({
+            text: data.error,
+            type: 'error'
+          })
+          setTimeout(() => setMessage({text: '', type: ''}), 5000)
+        })
     }
   }
 

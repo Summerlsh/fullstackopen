@@ -52,7 +52,7 @@ app.put('/api/persons/:id', (req, res, next) => {
     number: req.body.number
   }
 
-  Person.findByIdAndUpdate(req.params.id, newPerson, {new: true})
+  Person.findByIdAndUpdate(req.params.id, newPerson, {new: true, runValidators: true, context: 'query'})
     .then(returnedPerson => {
       if (returnedPerson) {
         res.json(returnedPerson)
@@ -71,20 +71,19 @@ app.delete('/api/persons/:id', (req, res, next) => {
     .catch(err => next(err))
 })
 
-app.post('/api/persons', (req, res) => {
+app.post('/api/persons', (req, res, next) => {
   const {name, number} = req.body
-  if (name === undefined || number === undefined || name === '' || number === '') {
-    return res.status(400).json({error: 'name or number cannot be empty'})
-  }
 
   const person = new Person({
     name,
     number
   })
 
-  person.save().then(result => {
-    res.status(201).json(result)
-  })
+  person.save()
+    .then(result => {
+      res.status(201).json(result)
+    })
+    .catch(err => next(err))
 })
 
 const unknownEndpoint = (req, res) => {
@@ -97,6 +96,8 @@ const errorHandler = (err, req, res, next) => {
   console.log(err.message)
   if (err.name === 'CastError' && err.kind === 'ObjectId') {
     res.status(400).send({error: 'malformatted id'})
+  } else if (err.name === 'ValidationError') {
+    res.status(400).send({error: err.message})
   }
 
   next(err)
