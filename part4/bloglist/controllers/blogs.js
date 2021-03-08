@@ -9,7 +9,7 @@ blogsRouter.get('/', async (request, response) => {
 blogsRouter.post('/', async (request, response) => {
   let {title, url, likes} = request.body
   if (title === undefined || url === undefined) {
-    return response.status(400).send({error: 'title and url are required'})
+    return response.status(400).json({error: 'title and url are required'})
   }
   if (likes === undefined) {
     likes = 0
@@ -21,6 +21,21 @@ blogsRouter.post('/', async (request, response) => {
 
   const result = await blog.save()
   response.status(201).json(result)
+})
+
+blogsRouter.delete('/:id', async (request, response) => {
+  let id = request.params.id
+
+  await Blog.findByIdAndDelete(id)
+  response.status(204).end()
+})
+
+blogsRouter.put('/:id', async (request, response) => {
+  let id = request.params.id
+  let likes = request.body.likes
+
+  const result = await Blog.findByIdAndUpdate(id, {likes}, {new: true})
+  response.json(result)
 })
 
 module.exports = blogsRouter
