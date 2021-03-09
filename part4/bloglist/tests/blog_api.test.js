@@ -1,11 +1,12 @@
 const mongoose = require('mongoose')
-
 const supertest = require('supertest')
+
 const app = require('../app')
+const helper = require('./test_helper')
+const Blog = require('../models/blog')
+const User = require('../models/user')
 
 const api = supertest(app)
-const Blog = require('../models/blog')
-const helper = require('./test_helper')
 
 beforeEach(async () => {
   await Blog.deleteMany({})
@@ -106,11 +107,93 @@ describe('update a blog', () => {
 
     const response = await api
       .put(`/api/blogs/${blogToUpdate.id}`)
-      .send({likes: 77})
+      .send({ likes: 77 })
       .expect(200)
       .expect('Content-Type', /json/)
 
     expect(response.body.likes).toBe(77)
+  })
+})
+
+describe('create user', () => {
+  beforeEach(async () => {
+    await User.deleteMany({})
+    const user = new User({
+      username: 'username',
+      name: 'name',
+      password: 'password'
+    })
+    await user.save()
+  })
+
+  test('should add a new user', async () => {
+    const usersAtStart = await helper.usersInDb()
+    const newUser = {
+      username: 'newUser',
+      name: 'Test',
+      password: 'password'
+    }
+    await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(201)
+      .expect('Content-Type', /json/)
+
+    const usersAtEnd = await helper.usersInDb()
+    expect(usersAtEnd).toHaveLength(usersAtStart.length + 1)
+
+    const usernames = usersAtEnd.map(user => user.username)
+    expect(usernames).toContain(newUser.username)
+  })
+
+  test('username must be unique', async () => {
+    const usersAtStart = await helper.usersInDb()
+    const newUser = {
+      username: 'username',
+      name: 'Test',
+      password: 'password'
+    }
+    await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(400)
+      .expect('Content-Type', /json/)
+
+    const usersAtEnd = await helper.usersInDb()
+    expect(usersAtEnd).toHaveLength(usersAtStart.length)
+  })
+
+  test('the length of username must be greater than 3', async () => {
+    const usersAtStart = await helper.usersInDb()
+    const newUser = {
+      username: 'ne',
+      name: 'Test',
+      password: 'password'
+    }
+    await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(400)
+      .expect('Content-Type', /json/)
+
+    const usersAtEnd = await helper.usersInDb()
+    expect(usersAtEnd).toHaveLength(usersAtStart.length)
+
+    const usernames = usersAtEnd.map(user => user.username)
+    expect(usernames).not.toContain(newUser.username)
+  })
+
+  test('the length of password must be greater than 3', async () => {
+    const newUser = {
+      username: 'new',
+      name: 'Test',
+      password: '12'
+    }
+    await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(400)
+      .expect('Content-Type', /json/)
   })
 })
 
