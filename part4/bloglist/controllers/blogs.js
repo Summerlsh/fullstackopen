@@ -40,9 +40,17 @@ blogsRouter.post('/', async (request, response) => {
 })
 
 blogsRouter.delete('/:id', async (request, response) => {
-  let id = request.params.id
+  const id = request.params.id
+  const blog = await Blog.findById(id)
 
-  await Blog.findByIdAndDelete(id)
+  const decodedToken = jwt.verify(request.token, process.env.SECERT)
+  if (!decodedToken.id || blog.user.toString() !== decodedToken.id) {
+    return response.status(401).json({
+      error: 'invalid token'
+    })
+  }
+
+  await blog.remove()
   response.status(204).end()
 })
 
