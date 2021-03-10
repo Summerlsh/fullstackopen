@@ -9,6 +9,7 @@ const User = require('../models/user')
 const api = supertest(app)
 
 beforeEach(async () => {
+  // 初始化 blog
   await Blog.deleteMany({})
   const blogObjects = helper.initialBlogs.map(blog => new Blog(blog))
   const promiseArray = blogObjects.map(blog => blog.save())
@@ -35,6 +36,29 @@ describe('when there is initially some blogs saved', () => {
 })
 
 describe('add a new blog', () => {
+  let authorization
+
+  beforeAll(async () => {
+    // 初始化 user
+    await User.deleteMany({})
+    const user = {
+      username: 'Amay',
+      name: 'Amay',
+      password: '123456'
+    }
+    await api.post('/api/users').send(user)
+
+    const response = await api
+      .post('/api/login')
+      .send({
+        username: 'Amay',
+        password: '123456'
+      })
+    console.log('response:', response)
+
+    authorization = `Bearer ${response.body.token}`
+  })
+
   test('a valid blog can be added', async () => {
     const newBlog = {
       title: 'Test add',
@@ -46,6 +70,7 @@ describe('add a new blog', () => {
     await api
       .post('/api/blogs')
       .send(newBlog)
+      .set('Authorization', authorization)
       .expect(201)
       .expect('Content-Type', /application\/json/)
 
@@ -66,6 +91,7 @@ describe('add a new blog', () => {
     const response = await api
       .post('/api/blogs')
       .send(newBlog)
+      .set('Authorization', authorization)
       .expect(201)
     expect(response.body.likes).toBe(0)
   })
@@ -79,7 +105,22 @@ describe('add a new blog', () => {
     await api
       .post('/api/blogs')
       .send(newBlog)
+      .set('Authorization', authorization)
       .expect(400)
+  })
+
+  test('token missing should return code 401', async () => {
+    const newBlog = {
+      title: 'Test add',
+      author: 'Shawn',
+      url: 'http://are.you.ok',
+      likes: 100
+    }
+
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(401)
   })
 })
 
