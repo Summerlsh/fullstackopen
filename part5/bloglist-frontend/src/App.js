@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useRef} from 'react'
 
 import blogService from './services/blogs'
 import loginService from './services/login'
@@ -15,7 +15,7 @@ const App = () => {
   const [message, setMessage] = useState('')
   const [messageType, setMessageType] = useState('')
   const [user, setUser] = useState(null)
-
+  const blogFormRef = useRef()
 
   const handleLogin = async event => {
     event.preventDefault()
@@ -41,7 +41,7 @@ const App = () => {
   const addBlog = async (blogObject) => {
     try {
       const newBlog = await blogService.createBlog(blogObject)
-
+      blogFormRef.current.toggleVisibility()
       setMessage(`a new blog ${newBlog.title} by ${newBlog.author} added`)
       setMessageType('success')
       setBlogs(blogs.concat(newBlog))
@@ -90,9 +90,11 @@ const App = () => {
         <h2>blogs</h2>
         <Notification text={message} type={messageType}/>
         <p>{user.name} logged in <button onClick={handleLogout}>logout</button></p>
-        <Toggleable buttonLabel='new note'>
+
+        <Toggleable buttonLabel='create new note' ref={blogFormRef}>
           <BlogForm createBlog={addBlog}/>
         </Toggleable>
+
         {blogs.map(blog =>
           <Blog key={blog.id} blog={blog}/>
         )}
