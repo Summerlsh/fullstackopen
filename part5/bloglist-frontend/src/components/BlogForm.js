@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react'
 
-const BlogForm = ({createBlog}) => {
+const BlogForm = ({ createBlog }) => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
@@ -23,23 +23,23 @@ const BlogForm = ({createBlog}) => {
       <form onSubmit={handleSubmit}>
         <div>
           title: <input value={title}
-                        type="text"
-                        onChange={({target}) => setTitle(target.value)}/>
+            type="text"
+            onChange={({ target }) => setTitle(target.value)}/>
         </div>
         <div>
           author: <input value={author}
-                         type="text"
-                         onChange={({target}) => setAuthor(target.value)}/>
+            type="text"
+            onChange={({ target }) => setAuthor(target.value)}/>
         </div>
         <div>
           url: <input value={url}
-                      type="text"
-                      onChange={({target}) => setUrl(target.value)}/>
+            type="text"
+            onChange={({ target }) => setUrl(target.value)}/>
         </div>
         <button type="submit">create</button>
       </form>
     </div>
-  );
+  )
 }
 
 export default BlogForm

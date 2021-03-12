@@ -1,6 +1,8 @@
+import React from 'react'
+
 import './Notification.css'
 
-const Notification = ({text, type}) => {
+const Notification = ({ text, type }) => {
   if (text === '') {
     return null
   }

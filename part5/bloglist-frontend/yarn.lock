@@ -4545,10 +4545,10 @@
     "resolve" "^1.17.0"
     "tsconfig-paths" "^3.9.0"
 
-"eslint-plugin-jest@^24.0.0", "eslint-plugin-jest@^24.1.0":
-  "integrity" "sha1-LXeE9Yv0JLe6iIMFxsBw+AvSr10= sha512-PZ6+/cOldZxpGF3rVYX6Y+83AUAI4jofdtyVrjimVHgXHfPBC5UKVTn92f6aFFV9HuD8xa1WNqY5s3kgfSzROQ=="
-  "resolved" "https://registry.npm.taobao.org/eslint-plugin-jest/download/eslint-plugin-jest-24.2.0.tgz?cache=0&sync_timestamp=1615289899695&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Feslint-plugin-jest%2Fdownload%2Feslint-plugin-jest-24.2.0.tgz"
-  "version" "24.2.0"
+"eslint-plugin-jest@^24.0.0", "eslint-plugin-jest@^24.1.0", "eslint-plugin-jest@^24.2.1":
+  "integrity" "sha1-foTxajymWJuGvpcyqT1xNnpO1ic="
+  "resolved" "https://registry.npm.taobao.org/eslint-plugin-jest/download/eslint-plugin-jest-24.2.1.tgz?cache=0&sync_timestamp=1615378084586&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Feslint-plugin-jest%2Fdownload%2Feslint-plugin-jest-24.2.1.tgz"
+  "version" "24.2.1"
   dependencies:
     "@typescript-eslint/experimental-utils" "^4.0.1"
 

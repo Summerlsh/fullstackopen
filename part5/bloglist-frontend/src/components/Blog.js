@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
-import blogService from "../services/blogs";
+import blogService from '../services/blogs'
 
 const Blog = (props) => {
   const [blog, setBlog] = useState(props.blog)
@@ -11,7 +11,7 @@ const Blog = (props) => {
   }
 
   const buttonText = show ? 'hide' : 'view'
-  const detailStyle = {display: show ? '' : 'none'}
+  const detailStyle = { display: show ? '' : 'none' }
   const blogStyle = {
     border: '2px solid',
     marginBottom: 5,
@@ -29,7 +29,7 @@ const Blog = (props) => {
       ...blog,
       likes
     })
-    setBlog({...blog, likes})
+    setBlog({ ...blog, likes })
   }
 
   const removeBlog = async blog => {
@@ -55,7 +55,7 @@ const Blog = (props) => {
         <button style={removeBtnStyle} onClick={() => removeBlog(blog)}>remove</button>
       </div>
     </div>
-  );
+  )
 }
 
 export default Blog

@@ -1,12 +1,12 @@
-import React, {useEffect, useState, useRef} from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 
 import blogService from './services/blogs'
 import loginService from './services/login'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
-import LoginForm from "./components/LoginForm";
-import Toggleable from "./components/Toggleable";
-import BlogForm from "./components/BlogForm";
+import LoginForm from './components/LoginForm'
+import Toggleable from './components/Toggleable'
+import BlogForm from './components/BlogForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -81,11 +81,11 @@ const App = () => {
 
   return user === null
     ? (<LoginForm message={message}
-                  username={username}
-                  password={password}
-                  handleUsernameChange={({target}) => setUsername(target.value)}
-                  handlePasswordChange={({target}) => setPassword(target.value)}
-                  handleSubmit={handleLogin}/>)
+      username={username}
+      password={password}
+      handleUsernameChange={({ target }) => setUsername(target.value)}
+      handlePasswordChange={({ target }) => setPassword(target.value)}
+      handleSubmit={handleLogin}/>)
     : (
       <div>
         <h2>blogs</h2>
