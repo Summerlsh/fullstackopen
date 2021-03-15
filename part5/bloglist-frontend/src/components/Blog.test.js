@@ -47,3 +47,30 @@ test('It should show url and likes after clicking the button', () => {
   expect(component.container).toHaveTextContent('http://localhost:3000')
   expect(component.container).toHaveTextContent('likes')
 })
+
+test('the like button is clicked twice, the event handler should be called twice', () => {
+  const handleUpdate = jest.fn()
+  const blog = {
+    title: 'Test',
+    author: 'Alice',
+    url: 'http://localhost:3000',
+    likes: 10,
+    user: {
+      id: '123',
+      name: 'test',
+      username: 'test'
+    }
+  }
+  const component = render(
+    <Blog blog={blog} handleUpdate={handleUpdate}/>
+  )
+  const viewButton = component.getByText('view')
+  fireEvent.click(viewButton)
+
+  const likeButton = component.getByText('like')
+  fireEvent.click(likeButton)
+  fireEvent.click(likeButton)
+
+  expect(handleUpdate.mock.calls).toHaveLength(2)
+})
+

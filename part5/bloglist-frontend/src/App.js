@@ -55,6 +55,41 @@ const App = () => {
     }, 5000)
   }
 
+  const updateLikes = async blogObject => {
+    try {
+      // likes +1
+      const updatedBlog = {
+        ...blogObject,
+        likes: blogObject.likes + 1
+      }
+      await blogService.updateLikes(updatedBlog)
+      setBlogs(blogs.map(blog => blog.id === updatedBlog.id ? updatedBlog : blog))
+    } catch (err) {
+      const res = err.response.data
+      setMessage(`${res.error}`)
+      setMessageType('error')
+      setTimeout(() => {
+        setMessage('')
+      }, 5000)
+    }
+  }
+
+  const removeBlog = async blogObject => {
+    try {
+      if (window.confirm(`Remove blog ${blogObject.title} by ${blogObject.author}`)) {
+        await blogService.removeBlog(blogObject.id)
+        setBlogs(blogs.filter(blog => blog.id !== blogObject.id))
+      }
+    } catch (err) {
+      const res = err.response.data
+      setMessage(`${res.error}`)
+      setMessageType('error')
+      setTimeout(() => {
+        setMessage('')
+      }, 5000)
+    }
+  }
+
   const handleLogout = () => {
     window.localStorage.removeItem('loggedUser')
     setUser(null)
@@ -80,27 +115,31 @@ const App = () => {
   }, [])
 
   return user === null
-    ? (<LoginForm message={message}
+    ? <LoginForm message={message}
       username={username}
       password={password}
       handleUsernameChange={({ target }) => setUsername(target.value)}
       handlePasswordChange={({ target }) => setPassword(target.value)}
-      handleSubmit={handleLogin}/>)
-    : (
-      <div>
-        <h2>blogs</h2>
-        <Notification text={message} type={messageType}/>
-        <p>{user.name} logged in <button onClick={handleLogout}>logout</button></p>
+      handleSubmit={handleLogin}/>
+    :
+    <div>
+      <h2>blogs</h2>
+      <Notification text={message} type={messageType}/>
+      <p>{user.name} logged in <button onClick={handleLogout}>logout</button></p>
 
-        <Toggleable buttonLabel='create new note' ref={blogFormRef}>
-          <BlogForm createBlog={addBlog}/>
-        </Toggleable>
+      <Toggleable buttonLabel='create new note' ref={blogFormRef}>
+        <BlogForm createBlog={addBlog}/>
+      </Toggleable>
 
-        {blogs.map(blog =>
-          <Blog key={blog.id} blog={blog} user={user}/>
-        )}
-      </div>
-    )
+      {blogs.map(blog =>
+        <Blog key={blog.id}
+          blog={blog}
+          user={user}
+          handleUpdate={updateLikes}
+          handleDelete={removeBlog}
+        />
+      )}
+    </div>
 }
 
 export default App
