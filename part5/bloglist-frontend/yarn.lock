@@ -1595,7 +1595,7 @@
     "pretty-format" "^26.6.2"
 
 "@testing-library/jest-dom@^5.11.9":
-  "integrity" "sha1-5rPNaHAh+J8mG9U8vjZwQfvT6XU= sha512-Mn2gnA9d1wStlAIT2NU8J15LNob0YFBVjs2aEQ3j8rsfRQo+lAs7/ui1i2TGaJjapLmuNPLTsrm+nPjmZDwpcQ=="
+  "integrity" "sha1-5rPNaHAh+J8mG9U8vjZwQfvT6XU="
   "resolved" "https://registry.npm.taobao.org/@testing-library/jest-dom/download/@testing-library/jest-dom-5.11.9.tgz?cache=0&sync_timestamp=1610479768390&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40testing-library%2Fjest-dom%2Fdownload%2F%40testing-library%2Fjest-dom-5.11.9.tgz"
   "version" "5.11.9"
   dependencies:
@@ -1609,7 +1609,7 @@
     "redent" "^3.0.0"
 
 "@testing-library/react@^11.2.5":
-  "integrity" "sha1-rhw2pmx3kN22ZixBbCeGPYeBjrk= sha512-yEx7oIa/UWLe2F2dqK0FtMF9sJWNXD+2PPtp39BvE0Kh9MJ9Kl0HrZAgEuhUJR+Lx8Di6Xz+rKwSdEPY2UV8ZQ=="
+  "integrity" "sha1-rhw2pmx3kN22ZixBbCeGPYeBjrk="
   "resolved" "https://registry.npm.taobao.org/@testing-library/react/download/@testing-library/react-11.2.5.tgz"
   "version" "11.2.5"
   dependencies:

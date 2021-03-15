@@ -4,14 +4,13 @@ import blogService from '../services/blogs'
 
 const Blog = (props) => {
   const [blog, setBlog] = useState(props.blog)
-  const [show, setShow] = useState(false)
+  const [showDetail, setShowDetail] = useState(false)
 
   if (blog === null) {
     return null
   }
 
-  const buttonText = show ? 'hide' : 'view'
-  const detailStyle = { display: show ? '' : 'none' }
+  const buttonText = showDetail ? 'hide' : 'view'
   const blogStyle = {
     border: '2px solid',
     marginBottom: 5,
@@ -19,7 +18,7 @@ const Blog = (props) => {
     paddingLeft: 2
   }
   const removeBtnStyle = {
-    display: blog.user.name === props.user.name ? '' : 'none'
+    display: blog.user.name === props.user?.name ? '' : 'none'
   }
 
   const updateLikes = async blog => {
@@ -40,20 +39,25 @@ const Blog = (props) => {
   }
 
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className="blog">
       <div>
         {blog.title} {blog.author}
-        <button onClick={() => setShow(!show)}>{buttonText}</button>
+        <button onClick={() => setShowDetail(!showDetail)}>{buttonText}</button>
       </div>
-      <div style={detailStyle}>
-        <div>{blog.url}</div>
-        <div>
-          likes {blog.likes}
-          <button onClick={() => updateLikes(blog)}>like</button>
-        </div>
-        <div>{blog.user.name}</div>
-        <button style={removeBtnStyle} onClick={() => removeBlog(blog)}>remove</button>
-      </div>
+      {
+        showDetail
+          ?
+          <div>
+            <div>{blog.url}</div>
+            <div>
+              likes {blog.likes}
+              <button onClick={() => updateLikes(blog)}>like</button>
+            </div>
+            <div>{blog.user.name}</div>
+            <button style={removeBtnStyle} onClick={() => removeBlog(blog)}>remove</button>
+          </div>
+          : null
+      }
     </div>
   )
 }
