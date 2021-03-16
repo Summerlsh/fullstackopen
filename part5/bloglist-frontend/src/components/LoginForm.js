@@ -17,15 +17,17 @@ const LoginForm = ({
     <form onSubmit={handleSubmit}>
       <div>
         username <input value={username}
+          id="username"
           type="text"
           onChange={handleUsernameChange}/>
       </div>
       <div>
         password <input value={password}
+          id="password"
           type="password"
           onChange={handlePasswordChange}/>
       </div>
-      <button type="submit">login</button>
+      <button type="submit" id="loginBtn">login</button>
     </form>
   </div>
 )
