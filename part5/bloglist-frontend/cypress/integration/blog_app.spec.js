@@ -1,21 +1,25 @@
 describe('Blog app', function () {
   beforeEach(function () {
     cy.request('post', 'http://localhost:3000/api/testing/reset')
-    // create here a user to backend
+    // create a user to backend
     const newUser = {
       username: 'test',
       password: 'test',
       name: 'Test User'
     }
     cy.request('post', 'http://localhost:3000/api/users', newUser)
-    cy.visit('http://localhost:3000')
   })
 
   it('Login form is shown', function () {
+    cy.visit('http://localhost:3000')
     cy.contains('log in to application')
   })
 
   describe('Login', function () {
+    beforeEach(function () {
+      cy.visit('http://localhost:3000')
+    })
+
     it('succeed with correct credentials', function () {
       cy.get('#username').type('test')
       cy.get('#password').type('test')
@@ -37,9 +41,7 @@ describe('Blog app', function () {
   describe('When logged in', function () {
     beforeEach(function () {
       // log in
-      cy.get('#username').type('test')
-      cy.get('#password').type('test')
-      cy.get('#loginBtn').click()
+      cy.login({ username: 'test', password: 'test' })
     })
 
     it('A blog can be created', function () {
@@ -49,7 +51,23 @@ describe('Blog app', function () {
       cy.get('#author').type('test author')
       cy.get('#url').type('https://example.com')
       cy.get('#createBtn').click()
-      cy.get('.blog').should('have.length', 1)
+      cy.get('.blog', { timeout: 5000 }).should('have.length', 1)
+    })
+
+    describe('and several blogs exist', function () {
+      beforeEach(function () {
+        cy.createBlog({
+          title: 'test title',
+          author: 'Test Author',
+          url: 'http://example.com'
+        })
+      })
+
+      it('A blog can be liked', function () {
+        cy.contains('view').click()
+        cy.contains('like').click()
+        cy.get('#likes').contains('1')
+      })
     })
   })
 })

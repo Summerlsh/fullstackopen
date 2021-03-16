@@ -9,6 +9,13 @@ blogsRouter.get('/', async (request, response) => {
   response.json(blogs)
 })
 
+blogsRouter.get('/:id', async (request, response) => {
+  let id = request.params.id
+  const blog = await Blog.findById(id)
+    .populate('user', { username: 1, name: 1 })
+  response.json(blog)
+})
+
 blogsRouter.post('/', async (request, response) => {
   let { title, url, likes } = request.body
   // 验证token有效性

@@ -41,14 +41,15 @@ const App = () => {
   const addBlog = async (blogObject) => {
     try {
       const newBlog = await blogService.createBlog(blogObject)
+      const blog = await blogService.getBlogBy(newBlog.id)
       blogFormRef.current.toggleVisibility()
-      setMessage(`a new blog ${newBlog.title} by ${newBlog.author} added`)
+      setBlogs(blogs.concat(blog))
       setMessageType('success')
-      setBlogs(blogs.concat(newBlog))
+      setMessage(`a new blog ${newBlog.title} by ${newBlog.author} added`)
     } catch (err) {
       const res = err.response.data
-      setMessage(`${res.error}`)
       setMessageType('error')
+      setMessage(`${res.error}`)
     }
     setTimeout(() => {
       setMessage('')

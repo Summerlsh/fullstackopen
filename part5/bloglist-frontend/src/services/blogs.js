@@ -12,6 +12,11 @@ const getAll = async () => {
   return response.data
 }
 
+const getBlogBy = async (id) => {
+  const response = await axios.get(`${baseUrl}/${id}`)
+  return response.data
+}
+
 const createBlog = async newBlog => {
   const config = {
     headers: { Authorization: token }
@@ -35,6 +40,7 @@ const removeBlog = async id => {
 
 const blogService = {
   getAll,
+  getBlogBy,
   setToken,
   createBlog,
   updateLikes,

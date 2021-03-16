@@ -15,7 +15,7 @@ const Blog = ({ blog, user, handleUpdate, handleDelete }) => {
     paddingLeft: 2
   }
   const removeBtnStyle = {
-    display: blog.user.name === user?.name ? '' : 'none'
+    display: blog.user.id === user?.id ? '' : 'none'
   }
 
   return (
@@ -30,7 +30,7 @@ const Blog = ({ blog, user, handleUpdate, handleDelete }) => {
           <div>
             <div>{blog.url}</div>
             <div>
-              likes {blog.likes}
+              likes <span id="likes">{blog.likes}</span>
               <button onClick={() => handleUpdate(blog)}>like</button>
             </div>
             <div>{blog.user.name}</div>
