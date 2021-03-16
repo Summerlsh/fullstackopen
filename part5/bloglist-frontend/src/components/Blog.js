@@ -14,9 +14,6 @@ const Blog = ({ blog, user, handleUpdate, handleDelete }) => {
     paddingTop: 10,
     paddingLeft: 2
   }
-  const removeBtnStyle = {
-    display: blog.user.id === user?.id ? '' : 'none'
-  }
 
   return (
     <div style={blogStyle} className="blog">
@@ -34,7 +31,7 @@ const Blog = ({ blog, user, handleUpdate, handleDelete }) => {
               <button onClick={() => handleUpdate(blog)}>like</button>
             </div>
             <div>{blog.user.name}</div>
-            <button style={removeBtnStyle} onClick={() => handleDelete(blog)}>remove</button>
+            {blog.user.id === user?.id ? <button onClick={() => handleDelete(blog)}>remove</button> : null}
           </div>
           : null
       }
