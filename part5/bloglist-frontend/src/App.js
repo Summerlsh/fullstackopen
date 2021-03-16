@@ -40,12 +40,12 @@ const App = () => {
 
   const addBlog = async (blogObject) => {
     try {
-      const newBlog = await blogService.createBlog(blogObject)
-      const blog = await blogService.getBlogBy(newBlog.id)
+      await blogService.createBlog(blogObject)
+      const newBlogs = await blogService.getAll()
       blogFormRef.current.toggleVisibility()
-      setBlogs(blogs.concat(blog))
+      setBlogs(newBlogs.sort((a, b) => b.likes - a.likes))
       setMessageType('success')
-      setMessage(`a new blog ${newBlog.title} by ${newBlog.author} added`)
+      setMessage(`a new blog ${blogObject.title} by ${blogObject.author} added`)
     } catch (err) {
       const res = err.response.data
       setMessageType('error')
@@ -64,7 +64,9 @@ const App = () => {
         likes: blogObject.likes + 1
       }
       await blogService.updateLikes(updatedBlog)
-      setBlogs(blogs.map(blog => blog.id === updatedBlog.id ? updatedBlog : blog))
+      setBlogs(blogs
+        .map(blog => blog.id === updatedBlog.id ? updatedBlog : blog)
+        .sort((a, b) => b.likes - a.likes))
     } catch (err) {
       const res = err.response.data
       setMessage(`${res.error}`)
@@ -79,7 +81,9 @@ const App = () => {
     try {
       if (window.confirm(`Remove blog ${blogObject.title} by ${blogObject.author}`)) {
         await blogService.removeBlog(blogObject.id)
-        setBlogs(blogs.filter(blog => blog.id !== blogObject.id))
+        setBlogs(blogs
+          .filter(blog => blog.id !== blogObject.id)
+          .sort((a, b) => b.likes - a.likes))
       }
     } catch (err) {
       const res = err.response.data

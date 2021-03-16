@@ -60,7 +60,7 @@ describe('Blog app', function () {
       cy.get('.blog', { timeout: 5000 }).should('have.length', 1)
     })
 
-    describe('and several blogs exist', function () {
+    describe('and a blog exist', function () {
       beforeEach(function () {
         cy.createBlog({
           title: 'test title',
@@ -72,7 +72,7 @@ describe('Blog app', function () {
       it('A blog can be liked', function () {
         cy.contains('view').click()
         cy.contains('like').click()
-        cy.get('#likes').should('contain', '1')
+        cy.get('.likes').should('contain', '1')
       })
 
       it('A blog can be deleted', function () {
@@ -87,6 +87,32 @@ describe('Blog app', function () {
         cy.login({ username: 'test2', password: 'test2' })
         cy.contains('view').click()
         cy.contains('remove').should('not.exist')
+      })
+
+      describe('add several blogs', function () {
+        beforeEach(function () {
+          cy.createBlog({
+            title: 'test title2',
+            author: 'Test Author2',
+            url: 'http://example2.com',
+            likes: 2
+          })
+          cy.createBlog({
+            title: 'test title3',
+            author: 'Test Author3',
+            url: 'http://example3.com',
+            likes: 3
+          })
+        })
+
+        it('Blogs should be sorted by likes', function () {
+          cy.get('.showDetail').click({ multiple: true })
+          cy.get('.blog').then($blogs => {
+            cy.wrap($blogs[0]).get('.likes').contains(3)
+            cy.wrap($blogs[1]).get('.likes').contains(2)
+            cy.wrap($blogs[2]).get('.likes').contains(0)
+          })
+        })
       })
     })
   })
