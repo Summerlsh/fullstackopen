@@ -1,6 +1,6 @@
 const reducer = (state = '', action) => {
   switch (action.type) {
-    case 'SET': {
+    case 'SET_NOTIFICATION': {
       return action.content
     }
     case 'REMOVE':
@@ -10,16 +10,17 @@ const reducer = (state = '', action) => {
   }
 }
 
-export const setNotification = (content) => {
-  return {
-    type: 'SET',
-    content
-  }
-}
-
-export const removeNotification = () => {
-  return {
-    type: 'REMOVE'
+export const setNotification = (content, timeout) => {
+  return async dispatch => {
+    dispatch({
+      type: 'SET_NOTIFICATION',
+      content
+    })
+    setTimeout(() => {
+      dispatch({
+        type: 'REMOVE'
+      })
+    }, timeout * 1000)
   }
 }
 
