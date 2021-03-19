@@ -3,22 +3,24 @@ const reducer = (state = '', action) => {
     case 'SET_NOTIFICATION': {
       return action.content
     }
-    case 'REMOVE':
+    case 'REMOVE_NOTIFICATION':
       return ''
     default:
       return state
   }
 }
-
+let timeoutID
 export const setNotification = (content, timeout) => {
   return async dispatch => {
     dispatch({
       type: 'SET_NOTIFICATION',
       content
     })
-    setTimeout(() => {
+    console.log(timeoutID)
+    clearTimeout(timeoutID)
+    timeoutID = setTimeout(() => {
       dispatch({
-        type: 'REMOVE'
+        type: 'REMOVE_NOTIFICATION'
       })
     }, timeout * 1000)
   }
