@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import {
-  Link, Switch, Route, useRouteMatch, useHistory
-} from 'react-router-dom'
+import { Link, Switch, Route, useRouteMatch, useHistory } from 'react-router-dom'
+import _ from 'lodash'
 
 import { useField } from './hooks'
 
@@ -71,6 +70,9 @@ const CreateNew = (props) => {
   const info = useField('text')
   const history = useHistory()
 
+  const contentProps = _.omit(content, ['reset'])
+  const authorProps = _.omit(author, ['reset'])
+  const infoProps = _.omit(info, ['reset'])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -83,23 +85,30 @@ const CreateNew = (props) => {
     history.push('/')
   }
 
+  const handleReset = () => {
+    content.reset()
+    author.reset()
+    info.reset()
+  }
+
   return (
     <div>
       <h2>create a new anecdote</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} onReset={handleReset}>
         <div>
           content
-          <input name='content' {...content}/>
+          <input name='content' {...contentProps}/>
         </div>
         <div>
           author
-          <input name='author' {...author}/>
+          <input name='author' {...authorProps}/>
         </div>
         <div>
           url for more info
-          <input name='info' {...info}/>
+          <input name='info' {...infoProps}/>
         </div>
         <button>create</button>
+        <button type="reset">reset</button>
       </form>
     </div>
   )

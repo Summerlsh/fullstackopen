@@ -2,6 +2,7 @@ dependencies:
   '@testing-library/jest-dom': 5.11.9
   '@testing-library/react': 11.2.5_react-dom@17.0.1+react@17.0.1
   '@testing-library/user-event': 12.8.3
+  lodash: 4.17.21
   react: 17.0.1
   react-dom: 17.0.1_react@17.0.1
   react-router: 5.2.0_react@17.0.1
@@ -4631,6 +4632,25 @@ packages:
       ms: 2.1.2
     engines:
       node: '>=6.0'
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
+    resolution:
+      integrity: sha1-8NIpxQXgxtjEmsVT0bE9wYP2su4=
+      tarball: debug/download/debug-4.3.1.tgz?cache=0&sync_timestamp=1610095901939&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fdebug%2Fdownload%2Fdebug-4.3.1.tgz
+  /debug/4.3.1_supports-color@6.1.0:
+    dependencies:
+      supports-color: 6.1.0
+    dev: false
+    engines:
+      node: '>=6.0'
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
     resolution:
       integrity: sha1-8NIpxQXgxtjEmsVT0bE9wYP2su4=
       tarball: debug/download/debug-4.3.1.tgz?cache=0&sync_timestamp=1610095901939&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fdebug%2Fdownload%2Fdebug-4.3.1.tgz
@@ -13170,7 +13190,7 @@ packages:
       chokidar: 2.1.8
       compression: 1.7.4
       connect-history-api-fallback: 1.6.0
-      debug: 4.3.1
+      debug: 4.3.1_supports-color@6.1.0
       del: 4.1.1
       express: 4.17.1
       html-entities: 1.4.0
@@ -13709,6 +13729,7 @@ specifiers:
   '@testing-library/react': ^11.2.5
   '@testing-library/user-event': ^12.7.1
   eslint: ^7.22.0
+  lodash: ^4.17.21
   react: ^17.0.1
   react-dom: ^17.0.1
   react-router: ^5.2.0
