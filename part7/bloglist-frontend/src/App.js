@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 
 import blogService from './services/blogs'
 import loginService from './services/login'
@@ -7,15 +8,17 @@ import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
 import Toggleable from './components/Toggleable'
 import BlogForm from './components/BlogForm'
+import { setNotification } from './reducers/notificationReducer'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [message, setMessage] = useState('')
-  const [messageType, setMessageType] = useState('')
   const [user, setUser] = useState(null)
   const blogFormRef = useRef()
+  const dispatch = useDispatch()
+  const message = useSelector(state => state.message)
+  const messageType = useSelector(state => state.messageType)
 
   const handleLogin = async event => {
     event.preventDefault()
@@ -31,10 +34,7 @@ const App = () => {
       setPassword('')
     } catch (err) {
       const res = err.response.data
-      setMessage(`${res.error}`)
-      setTimeout(() => {
-        setMessage('')
-      }, 5000)
+      dispatch(setNotification(JSON.stringify(res), 'error', 5))
     }
   }
 
@@ -44,16 +44,11 @@ const App = () => {
       const newBlogs = await blogService.getAll()
       blogFormRef.current.toggleVisibility()
       setBlogs(newBlogs.sort((a, b) => b.likes - a.likes))
-      setMessageType('success')
-      setMessage(`a new blog ${blogObject.title} by ${blogObject.author} added`)
+      dispatch(setNotification(`a new blog ${blogObject.title} by ${blogObject.author} added`, 'success', 5))
     } catch (err) {
       const res = err.response.data
-      setMessageType('error')
-      setMessage(`${res.error}`)
+      dispatch(setNotification(JSON.stringify(res), 'error', 5))
     }
-    setTimeout(() => {
-      setMessage('')
-    }, 5000)
   }
 
   const updateLikes = async blogObject => {
@@ -69,11 +64,7 @@ const App = () => {
         .sort((a, b) => b.likes - a.likes))
     } catch (err) {
       const res = err.response.data
-      setMessage(`${res.error}`)
-      setMessageType('error')
-      setTimeout(() => {
-        setMessage('')
-      }, 5000)
+      dispatch(setNotification(JSON.stringify(res), 'error', 5))
     }
   }
 
@@ -87,11 +78,7 @@ const App = () => {
       }
     } catch (err) {
       const res = err.response.data
-      setMessage(`${res.error}`)
-      setMessageType('error')
-      setTimeout(() => {
-        setMessage('')
-      }, 5000)
+      dispatch(setNotification(JSON.stringify(res), 'error', 5))
     }
   }
 
@@ -120,7 +107,7 @@ const App = () => {
   }, [])
 
   return user === null
-    ? <LoginForm message={message}
+    ? <LoginForm
       username={username}
       password={password}
       handleUsernameChange={({ target }) => setUsername(target.value)}
@@ -129,7 +116,7 @@ const App = () => {
     :
     <div>
       <h2>blogs</h2>
-      <Notification text={message} type={messageType}/>
+      <Notification content={message} type={messageType}/>
       <p>{user.name} logged in <button onClick={handleLogout}>logout</button></p>
 
       <Toggleable buttonLabel='create new note' ref={blogFormRef}>

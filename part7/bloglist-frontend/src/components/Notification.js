@@ -2,8 +2,8 @@ import React from 'react'
 
 import './Notification.css'
 
-const Notification = ({ text, type }) => {
-  if (text === '') {
+const Notification = ({ content, type }) => {
+  if (!content) {
     return null
   }
 
@@ -15,7 +15,7 @@ const Notification = ({ text, type }) => {
   }
 
   return (
-    <div className={className}>{text}</div>
+    <div className={className}>{content}</div>
   )
 }
 

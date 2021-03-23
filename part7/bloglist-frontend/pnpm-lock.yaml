@@ -4,13 +4,17 @@ dependencies:
   prop-types: 15.7.2
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
+  react-redux: 7.2.3_8436876974e3dcafae98d64b636de192
   react-scripts: 4.0.3_react@17.0.2
+  redux: 4.0.5
+  redux-thunk: 2.3.0
 devDependencies:
   '@testing-library/jest-dom': 5.11.9
   '@testing-library/react': 11.2.5_react-dom@17.0.2+react@17.0.2
   cypress: 6.8.0
   eslint-plugin-cypress: 2.11.2
   eslint-plugin-jest: 24.3.2
+  redux-devtools-extension: 2.13.9_redux@4.0.5
 lockfileVersion: 5.2
 packages:
   /@babel/code-frame/7.10.4:
@@ -1820,6 +1824,19 @@ packages:
       webpack-dev-server: 3.x
       webpack-hot-middleware: 2.x
       webpack-plugin-serve: 0.x || 1.x
+    peerDependenciesMeta:
+      '@types/webpack':
+        optional: true
+      sockjs-client:
+        optional: true
+      type-fest:
+        optional: true
+      webpack-dev-server:
+        optional: true
+      webpack-hot-middleware:
+        optional: true
+      webpack-plugin-serve:
+        optional: true
     resolution:
       integrity: sha1-HuxGBZbSAMAja/GVsHil0d+Jt2Y=
       tarball: '@pmmmwh/react-refresh-webpack-plugin/download/@pmmmwh/react-refresh-webpack-plugin-0.4.3.tgz'
@@ -2163,6 +2180,14 @@ packages:
     resolution:
       integrity: sha1-If+6DZjaQ1DbZIkfkqnl2zzbThU=
       tarball: '@types/graceful-fs/download/@types/graceful-fs-4.1.5.tgz'
+  /@types/hoist-non-react-statics/3.3.1:
+    dependencies:
+      '@types/react': 17.0.3
+      hoist-non-react-statics: 3.3.2
+    dev: false
+    resolution:
+      integrity: sha1-ESSq/lEYy1kZd66xzqrtEHDrA58=
+      tarball: '@types/hoist-non-react-statics/download/@types/hoist-non-react-statics-3.3.1.tgz'
   /@types/html-minifier-terser/5.1.1:
     dev: false
     resolution:
@@ -2230,11 +2255,35 @@ packages:
     resolution:
       integrity: sha1-72UWWuopJMk1kgW/dIhluIgXU8A=
       tarball: '@types/prettier/download/@types/prettier-2.2.3.tgz'
+  /@types/prop-types/15.7.3:
+    dev: false
+    resolution:
+      integrity: sha1-KrDV2i5YFflLC51LldHl8kOrLKc=
+      tarball: '@types/prop-types/download/@types/prop-types-15.7.3.tgz'
   /@types/q/1.5.4:
     dev: false
     resolution:
       integrity: sha1-FZJUFOCtLNdlv+9YhC9+JqesyyQ=
       tarball: '@types/q/download/@types/q-1.5.4.tgz'
+  /@types/react-redux/7.1.16:
+    dependencies:
+      '@types/hoist-non-react-statics': 3.3.1
+      '@types/react': 17.0.3
+      hoist-non-react-statics: 3.3.2
+      redux: 4.0.5
+    dev: false
+    resolution:
+      integrity: sha1-D70EwlAMEhBUlMg9Sj5FwITjyyE=
+      tarball: '@types/react-redux/download/@types/react-redux-7.1.16.tgz'
+  /@types/react/17.0.3:
+    dependencies:
+      '@types/prop-types': 15.7.3
+      '@types/scheduler': 0.16.1
+      csstype: 3.0.7
+    dev: false
+    resolution:
+      integrity: sha1-um4hU2hQGsOCaVHu8pBFdMJizHk=
+      tarball: '@types/react/download/@types/react-17.0.3.tgz'
   /@types/resolve/0.0.8:
     dependencies:
       '@types/node': 14.14.35
@@ -2242,6 +2291,11 @@ packages:
     resolution:
       integrity: sha1-8mB00jjgJlnjI84aE9BB7uKA4ZQ=
       tarball: '@types/resolve/download/@types/resolve-0.0.8.tgz'
+  /@types/scheduler/0.16.1:
+    dev: false
+    resolution:
+      integrity: sha1-GIRSBehv8AOFF6q3oYpiprn3EnU=
+      tarball: '@types/scheduler/download/@types/scheduler-0.16.1.tgz'
   /@types/sinonjs__fake-timers/6.0.2:
     dev: true
     resolution:
@@ -2330,6 +2384,10 @@ packages:
     peerDependencies:
       '@typescript-eslint/parser': ^4.0.0
       eslint: ^5.0.0 || ^6.0.0 || ^7.0.0
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
     resolution:
       integrity: sha1-VvjanuEY/pdjrzTWpSaWcjT2p/A=
       tarball: '@typescript-eslint/eslint-plugin/download/@typescript-eslint/eslint-plugin-4.19.0.tgz'
@@ -2394,6 +2452,10 @@ packages:
       node: ^10.12.0 || >=12.0.0
     peerDependencies:
       eslint: ^5.0.0 || ^6.0.0 || ^7.0.0
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
     resolution:
       integrity: sha1-Sud1E7OfFk8XUfIfNI0ubLLRESg=
       tarball: '@typescript-eslint/parser/download/@typescript-eslint/parser-4.19.0.tgz'
@@ -2432,6 +2494,11 @@ packages:
     dev: false
     engines:
       node: ^10.12.0 || >=12.0.0
+    peerDependencies:
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
     resolution:
       integrity: sha1-/QBhzDit1PrUUTbWVECFafNluFM=
       tarball: '@typescript-eslint/typescript-estree/download/@typescript-eslint/typescript-estree-3.10.1.tgz'
@@ -2446,6 +2513,11 @@ packages:
       tsutils: 3.21.0
     engines:
       node: ^10.12.0 || >=12.0.0
+    peerDependencies:
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
     resolution:
       integrity: sha1-inCf+kAChKty3zM3bfCF4uL2EUc=
       tarball: '@typescript-eslint/typescript-estree/download/@typescript-eslint/typescript-estree-4.19.0.tgz'
@@ -4758,6 +4830,11 @@ packages:
     resolution:
       integrity: sha1-/2ZaDdvcMYZLCWR/NBY0Q9kLCFI=
       tarball: cssstyle/download/cssstyle-2.3.0.tgz
+  /csstype/3.0.7:
+    dev: false
+    resolution:
+      integrity: sha1-Kl+3XhAV6E3RVpL3HomhRQKQlQs=
+      tarball: csstype/download/csstype-3.0.7.tgz?cache=0&sync_timestamp=1614220087654&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcsstype%2Fdownload%2Fcsstype-3.0.7.tgz
   /cyclist/1.0.1:
     dev: false
     resolution:
@@ -4872,6 +4949,26 @@ packages:
       ms: 2.1.2
     engines:
       node: '>=6.0'
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
+    resolution:
+      integrity: sha1-8NIpxQXgxtjEmsVT0bE9wYP2su4=
+      tarball: debug/download/debug-4.3.1.tgz?cache=0&sync_timestamp=1610095901939&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fdebug%2Fdownload%2Fdebug-4.3.1.tgz
+  /debug/4.3.1_supports-color@6.1.0:
+    dependencies:
+      ms: 2.1.2
+      supports-color: 6.1.0
+    dev: false
+    engines:
+      node: '>=6.0'
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
     resolution:
       integrity: sha1-8NIpxQXgxtjEmsVT0bE9wYP2su4=
       tarball: debug/download/debug-4.3.1.tgz?cache=0&sync_timestamp=1610095901939&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fdebug%2Fdownload%2Fdebug-4.3.1.tgz
@@ -5494,6 +5591,11 @@ packages:
       eslint-plugin-react: ^7.20.3
       eslint-plugin-react-hooks: ^4.0.8
       eslint-plugin-testing-library: ^3.9.0
+    peerDependenciesMeta:
+      eslint-plugin-jest:
+        optional: true
+      eslint-plugin-testing-library:
+        optional: true
     resolution:
       integrity: sha1-zP+fyONrMikChEy9eRl5gr41Wg4=
       tarball: eslint-config-react-app/download/eslint-config-react-app-6.0.0.tgz?cache=0&sync_timestamp=1614352604813&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Feslint-config-react-app%2Fdownload%2Feslint-config-react-app-6.0.0.tgz
@@ -5570,6 +5672,9 @@ packages:
     peerDependencies:
       '@typescript-eslint/eslint-plugin': '>= 4'
       eslint: '>=5'
+    peerDependenciesMeta:
+      '@typescript-eslint/eslint-plugin':
+        optional: true
     resolution:
       integrity: sha1-MKiy3qYnjQ2h1vudbNUwqvWAUKE=
       tarball: eslint-plugin-jest/download/eslint-plugin-jest-24.3.2.tgz
@@ -5584,6 +5689,9 @@ packages:
     peerDependencies:
       '@typescript-eslint/eslint-plugin': '>= 4'
       eslint: '>=5'
+    peerDependenciesMeta:
+      '@typescript-eslint/eslint-plugin':
+        optional: true
     resolution:
       integrity: sha1-MKiy3qYnjQ2h1vudbNUwqvWAUKE=
       tarball: eslint-plugin-jest/download/eslint-plugin-jest-24.3.2.tgz
@@ -6429,6 +6537,8 @@ packages:
     engines:
       node: ^8.16.0 || ^10.6.0 || >=11.0.0
     optional: true
+    os:
+      - darwin
     resolution:
       integrity: sha1-ilJveLj99GI7cJ4Ll1xSwkwC/Ro=
       tarball: fsevents/download/fsevents-2.3.2.tgz
@@ -6800,6 +6910,13 @@ packages:
     resolution:
       integrity: sha1-0nRXAQJabHdabFRXk+1QL8DGSaE=
       tarball: hmac-drbg/download/hmac-drbg-1.0.1.tgz
+  /hoist-non-react-statics/3.3.2:
+    dependencies:
+      react-is: 16.13.1
+    dev: false
+    resolution:
+      integrity: sha1-7OCsr3HWLClpwuxZ/v9CpLGoW0U=
+      tarball: hoist-non-react-statics/download/hoist-non-react-statics-3.3.2.tgz
   /hoopy/0.1.4:
     dev: false
     engines:
@@ -8032,6 +8149,9 @@ packages:
       node: '>=6'
     peerDependencies:
       jest-resolve: '*'
+    peerDependenciesMeta:
+      jest-resolve:
+        optional: true
     resolution:
       integrity: sha1-twSsCuAoqJEIpNBAs/kZ393I4zw=
       tarball: jest-pnp-resolver/download/jest-pnp-resolver-1.2.2.tgz
@@ -11229,6 +11349,31 @@ packages:
     resolution:
       integrity: sha1-5pHUqOnHiTZWVVOas3J2Kw77VPA=
       tarball: react-is/download/react-is-17.0.2.tgz
+  /react-redux/7.2.3_8436876974e3dcafae98d64b636de192:
+    dependencies:
+      '@babel/runtime': 7.13.10
+      '@types/react-redux': 7.1.16
+      hoist-non-react-statics: 3.3.2
+      loose-envify: 1.4.0
+      prop-types: 15.7.2
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      react-is: 16.13.1
+      redux: 4.0.5
+    dev: false
+    peerDependencies:
+      react: ^16.8.3 || ^17
+      react-dom: '*'
+      react-native: '*'
+      redux: ^2.0.0 || ^3.0.0 || ^4.0.0-0
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    resolution:
+      integrity: sha1-TAhGGGALsZkBJofankISPMo/C+k=
+      tarball: react-redux/download/react-redux-7.2.3.tgz
   /react-refresh/0.8.3:
     dev: false
     engines:
@@ -11306,6 +11451,9 @@ packages:
     peerDependencies:
       react: '>= 16'
       typescript: ^3.2.1 || ^4
+    peerDependenciesMeta:
+      typescript:
+        optional: true
     resolution:
       integrity: sha1-scr+18P6YD52KLoPGHeHlky100U=
       tarball: react-scripts/download/react-scripts-4.0.3.tgz
@@ -11426,6 +11574,28 @@ packages:
     resolution:
       integrity: sha1-5Ve3mYMWu1PJ8fVvpiY1LGljBZ8=
       tarball: redent/download/redent-3.0.0.tgz
+  /redux-devtools-extension/2.13.9_redux@4.0.5:
+    dependencies:
+      redux: 4.0.5
+    dev: true
+    peerDependencies:
+      redux: ^3.1.0 || ^4.0.0
+    resolution:
+      integrity: sha1-a3ZOgCi1B63LdaHK55D3Hmvgiuc=
+      tarball: redux-devtools-extension/download/redux-devtools-extension-2.13.9.tgz
+  /redux-thunk/2.3.0:
+    dev: false
+    resolution:
+      integrity: sha1-UcLBmhhe1Rh6qpotCLZm0NZGdiI=
+      tarball: redux-thunk/download/redux-thunk-2.3.0.tgz
+  /redux/4.0.5:
+    dependencies:
+      loose-envify: 1.4.0
+      symbol-observable: 1.2.0
+    dev: false
+    resolution:
+      integrity: sha1-TbXeWBbheJHeioDEJCMtBvBR2T8=
+      tarball: redux/download/redux-4.0.5.tgz
   /regenerate-unicode-properties/8.2.0:
     dependencies:
       regenerate: 1.4.2
@@ -11929,6 +12099,13 @@ packages:
       node-sass: ^4.0.0 || ^5.0.0
       sass: ^1.3.0
       webpack: ^4.36.0 || ^5.0.0
+    peerDependenciesMeta:
+      fibers:
+        optional: true
+      node-sass:
+        optional: true
+      sass:
+        optional: true
     resolution:
       integrity: sha1-Td1aPXY455SQZd1unHwEA39+Zj0=
       tarball: sass-loader/download/sass-loader-10.1.1.tgz
@@ -12371,28 +12548,32 @@ packages:
     resolution:
       integrity: sha1-6cGKQQ5e1+EkQqVJ+9ivp2cDjWU=
       tarball: spdx-license-ids/download/spdx-license-ids-3.0.7.tgz
-  /spdy-transport/3.0.0:
+  /spdy-transport/3.0.0_supports-color@6.1.0:
     dependencies:
-      debug: 4.3.1
+      debug: 4.3.1_supports-color@6.1.0
       detect-node: 2.0.5
       hpack.js: 2.1.6
       obuf: 1.1.2
       readable-stream: 3.6.0
       wbuf: 1.7.3
     dev: false
+    peerDependencies:
+      supports-color: '*'
     resolution:
       integrity: sha1-ANSGOmQArXXfkzYaFghgXl3NzzE=
       tarball: spdy-transport/download/spdy-transport-3.0.0.tgz
-  /spdy/4.0.2:
+  /spdy/4.0.2_supports-color@6.1.0:
     dependencies:
-      debug: 4.3.1
+      debug: 4.3.1_supports-color@6.1.0
       handle-thing: 2.0.1
       http-deceiver: 1.2.7
       select-hose: 2.0.0
-      spdy-transport: 3.0.0
+      spdy-transport: 3.0.0_supports-color@6.1.0
     dev: false
     engines:
       node: '>=6.0.0'
+    peerDependencies:
+      supports-color: '*'
     resolution:
       integrity: sha1-t09GYgOj7aRSwCSSuR+56EonZ3s=
       tarball: spdy/download/spdy-4.0.2.tgz
@@ -12816,7 +12997,6 @@ packages:
       integrity: sha1-ttxRHAYzRsnkFbgeQ0ARRbltQWc=
       tarball: svgo/download/svgo-1.3.2.tgz
   /symbol-observable/1.2.0:
-    dev: true
     engines:
       node: '>=0.10.0'
     resolution:
@@ -13115,6 +13295,11 @@ packages:
     dev: false
     engines:
       node: '>=6'
+    peerDependencies:
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
     resolution:
       integrity: sha1-pQCtCEsHmPHDBxrzkeZZEshrypI=
       tarball: ts-pnp/download/ts-pnp-1.2.0.tgz
@@ -13413,6 +13598,9 @@ packages:
     peerDependencies:
       file-loader: '*'
       webpack: ^4.0.0 || ^5.0.0
+    peerDependenciesMeta:
+      file-loader:
+        optional: true
     resolution:
       integrity: sha1-KFBekFyuFYzwfJLKYi1/I35wpOI=
       tarball: url-loader/download/url-loader-4.1.1.tgz
@@ -13635,7 +13823,7 @@ packages:
       chokidar: 2.1.8
       compression: 1.7.4
       connect-history-api-fallback: 1.6.0
-      debug: 4.3.1
+      debug: 4.3.1_supports-color@6.1.0
       del: 4.1.1
       express: 4.17.1
       html-entities: 1.4.0
@@ -13655,7 +13843,7 @@ packages:
       serve-index: 1.9.1
       sockjs: 0.3.21
       sockjs-client: 1.5.0
-      spdy: 4.0.2
+      spdy: 4.0.2_supports-color@6.1.0
       strip-ansi: 3.0.1
       supports-color: 6.1.0
       url: 0.11.0
@@ -13670,6 +13858,10 @@ packages:
     hasBin: true
     peerDependencies:
       webpack: ^4.0.0 || ^5.0.0
+      webpack-cli: '*'
+    peerDependenciesMeta:
+      webpack-cli:
+        optional: true
     resolution:
       integrity: sha1-x0Aov1uoiFqvIw5Iog6JNquFEfA=
       tarball: webpack-dev-server/download/webpack-dev-server-3.11.1.tgz?cache=0&sync_timestamp=1610608565099&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fwebpack-dev-server%2Fdownload%2Fwebpack-dev-server-3.11.1.tgz
@@ -13735,6 +13927,14 @@ packages:
     engines:
       node: '>=6.11.5'
     hasBin: true
+    peerDependencies:
+      webpack-cli: '*'
+      webpack-command: '*'
+    peerDependenciesMeta:
+      webpack-cli:
+        optional: true
+      webpack-command:
+        optional: true
     resolution:
       integrity: sha1-a/4rCvBVyLLR6Q7SzZNj+EEma3I=
       tarball: webpack/download/webpack-4.44.2.tgz
@@ -14179,4 +14379,8 @@ specifiers:
   prop-types: ^15.7.2
   react: ^17.0.1
   react-dom: ^17.0.1
+  react-redux: ^7.2.3
   react-scripts: 4.0.3
+  redux: ^4.0.5
+  redux-devtools-extension: ^2.13.9
+  redux-thunk: ^2.3.0
