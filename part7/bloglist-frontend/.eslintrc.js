@@ -7,7 +7,8 @@ module.exports = {
     'cypress/globals': true
   },
   'extends': [
-    'plugin:react/recommended'
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended'
   ],
   'parserOptions': {
     'ecmaFeatures': {

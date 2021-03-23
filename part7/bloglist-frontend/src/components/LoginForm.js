@@ -11,11 +11,12 @@ const LoginForm = ({
   handlePasswordChange,
   handleSubmit
 }) => {
-  const message = useSelector(state => state.message)
+  const notification = useSelector(state => state.notification)
+
   return (
     <div>
       <h2>log in to application</h2>
-      <Notification content={message} type="error"/>
+      <Notification content={notification.message} type="error"/>
       <form onSubmit={handleSubmit}>
         <div>
           username <input value={username}
