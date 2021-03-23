@@ -1,20 +1,25 @@
-import React, { useState } from 'react'
+import React from 'react'
+import _ from 'lodash'
+
+import { useField } from '../hooks'
 
 const BlogForm = ({ createBlog }) => {
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
+  const title = useField('text')
+  const author = useField('text')
+  const url = useField('text')
 
   const handleSubmit = async event => {
     event.preventDefault()
 
     createBlog({
-      title, author, url
+      title: title.value,
+      author: author.value,
+      url: url.value,
     })
 
-    setTitle('')
-    setAuthor('')
-    setUrl('')
+    title.reset()
+    author.reset()
+    url.reset()
   }
 
   return (
@@ -22,22 +27,13 @@ const BlogForm = ({ createBlog }) => {
       <h2>create new</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          title: <input value={title}
-            id="title"
-            type="text"
-            onChange={({ target }) => setTitle(target.value)}/>
+          title: <input id="title" {..._.omit(title, ['reset'])}/>
         </div>
         <div>
-          author: <input value={author}
-            id="author"
-            type="text"
-            onChange={({ target }) => setAuthor(target.value)}/>
+          author: <input id="author" {..._.omit(author, ['reset'])}/>
         </div>
         <div>
-          url: <input value={url}
-            id="url"
-            type="text"
-            onChange={({ target }) => setUrl(target.value)}/>
+          url: <input id="url" {..._.omit(url, ['reset'])}/>
         </div>
         <button type="submit" id="createBtn">create</button>
       </form>

@@ -1,17 +1,27 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
-import PropTypes from 'prop-types'
+import { useSelector, useDispatch } from 'react-redux'
+import _ from 'lodash'
 
 import Notification from './Notification'
+import { useField } from '../hooks'
+import { login } from '../reducers/userReducer'
 
-const LoginForm = ({
-  username,
-  password,
-  handleUsernameChange,
-  handlePasswordChange,
-  handleSubmit
-}) => {
+const LoginForm = () => {
+  const username = useField('text')
+  const password = useField('password')
   const notification = useSelector(state => state.notification)
+  const dispatch = useDispatch()
+
+  const handleSubmit = async event => {
+    event.preventDefault()
+
+    dispatch(login({
+      username: username.value,
+      password: password.value
+    }))
+    username.reset()
+    password.reset()
+  }
 
   return (
     <div>
@@ -19,29 +29,15 @@ const LoginForm = ({
       <Notification content={notification.message} type="error"/>
       <form onSubmit={handleSubmit}>
         <div>
-          username <input value={username}
-            id="username"
-            type="text"
-            onChange={handleUsernameChange}/>
+          username <input id="username" {..._.omit(username, ['reset'])}/>
         </div>
         <div>
-          password <input value={password}
-            id="password"
-            type="password"
-            onChange={handlePasswordChange}/>
+          password <input id="password" {..._.omit(password, ['reset'])}/>
         </div>
         <button type="submit" id="loginBtn">login</button>
       </form>
     </div>
   )
-}
-
-LoginForm.propTypes = {
-  username: PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired,
-  handleUsernameChange: PropTypes.func.isRequired,
-  handlePasswordChange: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired
 }
 
 export default LoginForm
