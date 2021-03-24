@@ -25,4 +25,12 @@ blogSchema.set('toJSON', {
   }
 })
 
+blogSchema.pre('remove', function (next) {
+  this.model('User').updateOne(
+    { blogs: this._id },
+    { $pull: { blogs: this._id } },
+    next
+  )
+})
+
 module.exports = mongoose.model('Blog', blogSchema)
