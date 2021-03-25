@@ -6,6 +6,7 @@ dependencies:
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
   react-redux: 7.2.3_8436876974e3dcafae98d64b636de192
+  react-router-dom: 5.2.0_react@17.0.2
   react-scripts: 4.0.3_react@17.0.2
   redux: 4.0.5
   redux-thunk: 2.3.0
@@ -6902,6 +6903,18 @@ packages:
     resolution:
       integrity: sha1-TAb8y0YC/iYCs8k9+C1+fb8aio4=
       tarball: hex-color-regex/download/hex-color-regex-1.1.0.tgz
+  /history/4.10.1:
+    dependencies:
+      '@babel/runtime': 7.13.10
+      loose-envify: 1.4.0
+      resolve-pathname: 3.0.0
+      tiny-invariant: 1.1.0
+      tiny-warning: 1.0.3
+      value-equal: 1.0.1
+    dev: false
+    resolution:
+      integrity: sha1-MzcaZeOoOyZ0NOKz87G0xYqtTPM=
+      tarball: history/download/history-4.10.1.tgz
   /hmac-drbg/1.0.1:
     dependencies:
       hash.js: 1.1.7
@@ -7807,6 +7820,11 @@ packages:
     resolution:
       integrity: sha1-dKTHbnfKn9P5MvKQwX6jJs0VcnE=
       tarball: is-wsl/download/is-wsl-2.2.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fis-wsl%2Fdownload%2Fis-wsl-2.2.0.tgz
+  /isarray/0.0.1:
+    dev: false
+    resolution:
+      integrity: sha1-ihis/Kmo9Bd+Cav8YDiTmwXR7t8=
+      tarball: isarray/download/isarray-0.0.1.tgz
   /isarray/1.0.0:
     resolution:
       integrity: sha1-u5NdSFgsuhaMBoNJV6VKPgcSTxE=
@@ -9145,6 +9163,19 @@ packages:
     resolution:
       integrity: sha1-pj9oFnOzBXH76LwlaGrnRu76mGk=
       tarball: min-indent/download/min-indent-1.0.1.tgz
+  /mini-create-react-context/0.4.1_prop-types@15.7.2+react@17.0.2:
+    dependencies:
+      '@babel/runtime': 7.13.10
+      prop-types: 15.7.2
+      react: 17.0.2
+      tiny-warning: 1.0.3
+    dev: false
+    peerDependencies:
+      prop-types: ^15.0.0
+      react: ^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
+    resolution:
+      integrity: sha1-ByFxVhv9ySLaCKYMIZekl8wtHV4=
+      tarball: mini-create-react-context/download/mini-create-react-context-0.4.1.tgz
   /mini-css-extract-plugin/0.11.3_webpack@4.44.2:
     dependencies:
       loader-utils: 1.4.0
@@ -10061,6 +10092,13 @@ packages:
     resolution:
       integrity: sha1-32BBeABfUi8V60SQ5yR6G/qmf4w=
       tarball: path-to-regexp/download/path-to-regexp-0.1.7.tgz
+  /path-to-regexp/1.8.0:
+    dependencies:
+      isarray: 0.0.1
+    dev: false
+    resolution:
+      integrity: sha1-iHs7qdhDk+h6CgufTLdWGYtTVIo=
+      tarball: path-to-regexp/download/path-to-regexp-1.8.0.tgz
   /path-type/2.0.0:
     dependencies:
       pify: 2.3.0
@@ -11382,6 +11420,41 @@ packages:
     resolution:
       integrity: sha1-ch1GV2ctQAxePHXQY8SoX7LV1o8=
       tarball: react-refresh/download/react-refresh-0.8.3.tgz
+  /react-router-dom/5.2.0_react@17.0.2:
+    dependencies:
+      '@babel/runtime': 7.13.10
+      history: 4.10.1
+      loose-envify: 1.4.0
+      prop-types: 15.7.2
+      react: 17.0.2
+      react-router: 5.2.0_react@17.0.2
+      tiny-invariant: 1.1.0
+      tiny-warning: 1.0.3
+    dev: false
+    peerDependencies:
+      react: '>=15'
+    resolution:
+      integrity: sha1-nmWk0MReEyieZsexfH4XXQ6hVmI=
+      tarball: react-router-dom/download/react-router-dom-5.2.0.tgz
+  /react-router/5.2.0_react@17.0.2:
+    dependencies:
+      '@babel/runtime': 7.13.10
+      history: 4.10.1
+      hoist-non-react-statics: 3.3.2
+      loose-envify: 1.4.0
+      mini-create-react-context: 0.4.1_prop-types@15.7.2+react@17.0.2
+      path-to-regexp: 1.8.0
+      prop-types: 15.7.2
+      react: 17.0.2
+      react-is: 16.13.1
+      tiny-invariant: 1.1.0
+      tiny-warning: 1.0.3
+    dev: false
+    peerDependencies:
+      react: '>=15'
+    resolution:
+      integrity: sha1-Qk51ZByodH+/duXsyml4GqN+opM=
+      tarball: react-router/download/react-router-5.2.0.tgz
   /react-scripts/4.0.3_react@17.0.2:
     dependencies:
       '@babel/core': 7.12.3
@@ -11849,6 +11922,11 @@ packages:
     resolution:
       integrity: sha1-w1IlhD3493bfIcV1V7wIfp39/Gk=
       tarball: resolve-from/download/resolve-from-5.0.0.tgz
+  /resolve-pathname/3.0.0:
+    dev: false
+    resolution:
+      integrity: sha1-mdAiJNPPJjaJvsuzk7xWAxMCXc0=
+      tarball: resolve-pathname/download/resolve-pathname-3.0.0.tgz
   /resolve-url-loader/3.1.2:
     dependencies:
       adjust-sourcemap-loader: 3.0.0
@@ -13186,6 +13264,16 @@ packages:
     resolution:
       integrity: sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q=
       tarball: timsort/download/timsort-0.3.0.tgz
+  /tiny-invariant/1.1.0:
+    dev: false
+    resolution:
+      integrity: sha1-Y0xfjv3CdxS384bDXmdgmR0jCHU=
+      tarball: tiny-invariant/download/tiny-invariant-1.1.0.tgz
+  /tiny-warning/1.0.3:
+    dev: false
+    resolution:
+      integrity: sha1-lKMNtFPfTGQ9D9VmBg1gqHXYR1Q=
+      tarball: tiny-warning/download/tiny-warning-1.0.3.tgz?cache=0&sync_timestamp=1604631266740&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftiny-warning%2Fdownload%2Ftiny-warning-1.0.3.tgz
   /tmp/0.2.1:
     dependencies:
       rimraf: 3.0.2
@@ -13711,6 +13799,11 @@ packages:
     resolution:
       integrity: sha1-/JH2uce6FchX9MssXe/uw51PQQo=
       tarball: validate-npm-package-license/download/validate-npm-package-license-3.0.4.tgz
+  /value-equal/1.0.1:
+    dev: false
+    resolution:
+      integrity: sha1-Hgt5THNMXAyt4XnEN9NW2TGjTWw=
+      tarball: value-equal/download/value-equal-1.0.1.tgz
   /vary/1.1.2:
     dev: false
     engines:
@@ -14382,6 +14475,7 @@ specifiers:
   react: ^17.0.1
   react-dom: ^17.0.1
   react-redux: ^7.2.3
+  react-router-dom: ^5.2.0
   react-scripts: 4.0.3
   redux: ^4.0.5
   redux-devtools-extension: ^2.13.9

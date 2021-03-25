@@ -4,7 +4,7 @@ import _ from 'lodash'
 
 import Notification from './Notification'
 import { useField } from '../hooks'
-import { login } from '../reducers/userReducer'
+import { login } from '../reducers/loginReducer'
 
 const LoginForm = () => {
   const username = useField('text')

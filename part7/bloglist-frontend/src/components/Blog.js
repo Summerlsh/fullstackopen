@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 
-const Blog = ({ blog, user, handleUpdate, handleDelete }) => {
+const Blog = ({ blog, handleUpdate, handleDelete }) => {
   const [showDetail, setShowDetail] = useState(false)
+  const loggedInUser = useSelector(state => state.loggedInUser)
 
   if (blog === null) {
     return null
@@ -31,7 +33,7 @@ const Blog = ({ blog, user, handleUpdate, handleDelete }) => {
               <button onClick={() => handleUpdate(blog)}>like</button>
             </div>
             <div>{blog.user.name}</div>
-            {blog.user.id === user?.id ? <button onClick={() => handleDelete(blog)}>remove</button> : null}
+            {blog.user.id === loggedInUser.id ? <button onClick={() => handleDelete(blog)}>remove</button> : null}
           </div>
           : null
       }
