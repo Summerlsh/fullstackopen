@@ -1,42 +1,55 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { deleteBlog, updateBlog } from '../reducers/blogReducer'
+import { useHistory } from 'react-router-dom'
 
-const Blog = ({ blog, handleUpdate, handleDelete }) => {
-  const [showDetail, setShowDetail] = useState(false)
-  const loggedInUser = useSelector(state => state.loggedInUser)
+const Blog = ({ id }) => {
+  const history = useHistory()
+  const dispatch = useDispatch()
+  const loggedInUser = useSelector((state) => state.loggedInUser)
+  const blogs = useSelector((state) => state.blogs)
+  const blog = blogs.find((blog) => blog.id === id)
 
-  if (blog === null) {
+  if (!blog) {
     return null
   }
 
-  const buttonText = showDetail ? 'hide' : 'view'
-  const blogStyle = {
-    border: '2px solid',
-    marginBottom: 5,
-    paddingTop: 10,
-    paddingLeft: 2
+  const updateLikes = async (blog) => {
+    // likes +1
+    const updatedBlog = {
+      ...blog,
+      likes: blog.likes + 1,
+    }
+    dispatch(updateBlog(updatedBlog))
+  }
+
+  const removeBlog = async (blog) => {
+    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
+      dispatch(deleteBlog(blog.id))
+      history.replace('/')
+    }
   }
 
   return (
-    <div style={blogStyle} className="blog">
+    <div>
       <div>
-        {blog.title} {blog.author}
-        <button onClick={() => setShowDetail(!showDetail)} className="showDetail">{buttonText}</button>
+        <h2>
+          {blog.title} {blog.author}
+        </h2>
       </div>
-      {
-        showDetail
-          ?
-          <div>
-            <div>{blog.url}</div>
-            <div>
-              likes <span className="likes">{blog.likes}</span>
-              <button onClick={() => handleUpdate(blog)}>like</button>
-            </div>
-            <div>{blog.user.name}</div>
-            {blog.user.id === loggedInUser.id ? <button onClick={() => handleDelete(blog)}>remove</button> : null}
-          </div>
-          : null
-      }
+      <div>
+        <div>
+          <a href={blog.url}>{blog.url}</a>
+        </div>
+        <div>
+          <span className="likes">{blog.likes} likes</span>
+          <button onClick={() => updateLikes(blog)}>like</button>
+        </div>
+        <div>added by {blog.user.name}</div>
+        {blog.user.id === loggedInUser.id ? (
+          <button onClick={() => removeBlog(blog)}>remove</button>
+        ) : null}
+      </div>
     </div>
   )
 }

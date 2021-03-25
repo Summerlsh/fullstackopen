@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import Toggleable from './Toggleable'
 import BlogForm from './BlogForm'
-import Blog from './Blog'
-import { createBlog, deleteBlog, initializeBlogs, updateBlog } from '../reducers/blogReducer'
+import { createBlog, initializeBlogs } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
+import { Link } from 'react-router-dom'
 
 const BlogList = () => {
   const dispatch = useDispatch()
@@ -15,6 +15,13 @@ const BlogList = () => {
   useEffect(() => {
     dispatch(initializeBlogs())
   }, [dispatch])
+
+  const blogStyle = {
+    border: '2px solid',
+    marginBottom: 5,
+    paddingTop: 10,
+    paddingLeft: 2,
+  }
 
   const addBlog = async (blog) => {
     dispatch(createBlog(blog))
@@ -28,21 +35,6 @@ const BlogList = () => {
     )
   }
 
-  const updateLikes = async (blog) => {
-    // likes +1
-    const updatedBlog = {
-      ...blog,
-      likes: blog.likes + 1,
-    }
-    dispatch(updateBlog(updatedBlog))
-  }
-
-  const removeBlog = async (blog) => {
-    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
-      dispatch(deleteBlog(blog.id))
-    }
-  }
-
   return (
     <div>
       <Toggleable buttonLabel="create new" ref={blogFormRef}>
@@ -52,12 +44,9 @@ const BlogList = () => {
       {blogs
         .sort((a, b) => b.likes - a.likes)
         .map((blog) => (
-          <Blog
-            key={blog.id}
-            blog={blog}
-            handleUpdate={updateLikes}
-            handleDelete={removeBlog}
-          />
+          <div key={blog.id} style={blogStyle}>
+            <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
+          </div>
         ))}
     </div>
   )
