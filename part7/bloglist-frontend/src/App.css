@@ -1,0 +1,9 @@
+header {
+  background-color: #cccccc;
+  padding: 5px;
+}
+
+header a,
+header span {
+  margin-right: 5px;
+}

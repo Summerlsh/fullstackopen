@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Switch, Route, useRouteMatch } from 'react-router-dom'
+import { Switch, Route, useRouteMatch, Link } from 'react-router-dom'
 
+import './App.css'
 import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
 import { getLoggedInUser, logout } from './reducers/loginReducer'
@@ -27,13 +28,18 @@ const App = () => {
     <LoginForm/>
   ) : (
     <div>
-      <h2>blogs</h2>
+      <header>
+        <Link to="/blogs">blogs</Link>
+        <Link to="/users">users</Link>
+        <span>{loggedInUser.name} logged in</span>
+        <button onClick={handleLogout}>logout</button>
+      </header>
+
+      <h2>blog app</h2>
       <Notification
         content={notification.message}
         type={notification.messageType}
       />
-      <p>{loggedInUser.name} logged in</p>
-      <button onClick={handleLogout}>logout</button>
 
       <Switch>
         <Route exact path="/">

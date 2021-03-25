@@ -45,7 +45,7 @@ const BlogList = () => {
 
   return (
     <div>
-      <Toggleable buttonLabel="create new note" ref={blogFormRef}>
+      <Toggleable buttonLabel="create new" ref={blogFormRef}>
         <BlogForm createBlog={addBlog}/>
       </Toggleable>
 
