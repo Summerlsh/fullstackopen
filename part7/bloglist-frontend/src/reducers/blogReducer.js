@@ -11,6 +11,9 @@ const blogReducer = (state = [], action) => {
     case 'UPDATE_BLOG': {
       return state.map(blog => blog.id === action.payload.id ? action.payload : blog)
     }
+    case 'ADD_NEW_COMMENT': {
+      return state.map(blog => blog.id === action.payload.id ? action.payload : blog)
+    }
     default:
       return state
   }
@@ -53,6 +56,17 @@ export const updateBlog = (blog) => {
     const newBlog = await blogService.getBlogBy(updatedBlog.id)
     dispatch({
       type: 'UPDATE_BLOG',
+      payload: newBlog
+    })
+  }
+}
+
+export const addNewComment = (blogId, comment) => {
+  return async dispatch => {
+    const updatedBlog = await blogService.addNewComment(blogId, comment)
+    const newBlog = await blogService.getBlogBy(updatedBlog.id)
+    dispatch({
+      type: 'ADD_NEW_COMMENT',
       payload: newBlog
     })
   }
