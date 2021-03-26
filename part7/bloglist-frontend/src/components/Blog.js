@@ -1,17 +1,19 @@
-import React from 'react'
-import _ from 'lodash'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import { Button, Input, Typography, Space, Form } from 'antd'
 
 import { deleteBlog, updateBlog, addNewComment } from '../reducers/blogReducer'
-import { useField } from '../hooks'
+
+const { Title, Paragraph, Link } = Typography
+const { TextArea } = Input
 
 const Blog = ({ id }) => {
   const history = useHistory()
   const dispatch = useDispatch()
   const loggedInUser = useSelector((state) => state.loggedInUser)
   const blogs = useSelector((state) => state.blogs)
-  const comment = useField('text')
+  const [comment, setComment] = useState('')
 
   const blog = blogs.find((blog) => blog.id === id)
   if (!blog) {
@@ -35,37 +37,45 @@ const Blog = ({ id }) => {
   }
 
   const addComment = (blogId) => {
-    dispatch(addNewComment(blogId, comment.value))
-    comment.reset()
+    dispatch(addNewComment(blogId, comment))
+    setComment('')
   }
 
   return (
-    <div>
-      <h2>
+    <Typography>
+      <Title level={2}>
         {blog.title} {blog.author}
-      </h2>
-      <div>
-        <a href={blog.url}>{blog.url}</a>
-      </div>
-      <div>
-        <span className="likes">{blog.likes} likes</span>
-        <button onClick={() => updateLikes(blog)}>like</button>
-      </div>
-      <div>added by {blog.user.name}</div>
-      {blog.user.id === loggedInUser.id ? (
-        <button onClick={() => removeBlog(blog)}>remove</button>
-      ) : null}
-      <h3>comments</h3>
-      <div>
-        <input {..._.omit(comment, ['reset'])}/>
-        <button onClick={() => addComment(blog.id)}>add comment</button>
-      </div>
-      <ul>
-        {blog.comments.map((comment, index) => (
-          <li key={index}>{comment}</li>
-        ))}
-      </ul>
-    </div>
+      </Title>
+      <Paragraph>
+        <div>
+          <Link href={blog.url}>{blog.url}</Link>
+        </div>
+        <Space>
+          <span className="likes">{blog.likes} likes</span>
+          <Button onClick={() => updateLikes(blog)} size='small'>like</Button>
+        </Space>
+        <div>added by {blog.user.name}</div>
+        {blog.user.id === loggedInUser.id ? (
+          <Button onClick={() => removeBlog(blog)}>remove</Button>
+        ) : null}
+      </Paragraph>
+      <Title level={3}>comments</Title>
+      <Paragraph>
+        <Form.Item>
+          <TextArea rows={4} onChange={({ target }) => setComment(target.value)} value={comment}/>
+        </Form.Item>
+        <Form.Item>
+          <Button htmlType="submit" onClick={() => addComment(blog.id)} type="primary">
+            Add Comment
+          </Button>
+        </Form.Item>
+        <ul>
+          {blog.comments.map((comment, index) => (
+            <li key={index}>{comment}</li>
+          ))}
+        </ul>
+      </Paragraph>
+    </Typography>
   )
 }
 

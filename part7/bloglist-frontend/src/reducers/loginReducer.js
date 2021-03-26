@@ -1,6 +1,7 @@
+import { notification } from 'antd'
+
 import blogService from '../services/blogs'
 import loginService from '../services/login'
-import { setNotification } from './notificationReducer'
 
 const loginReducer = (state = null, action) => {
   switch (action.type) {
@@ -41,7 +42,9 @@ export const login = (credentials) => {
       })
     } catch (err) {
       const res = err.response.data
-      dispatch(setNotification(res.error, 'error', 5))
+      notification.error({
+        message: res.error
+      })
     }
   }
 }

@@ -1,42 +1,43 @@
 import React from 'react'
-import _ from 'lodash'
-
-import { useField } from '../hooks'
+import { Button, Form, Input, Typography } from 'antd'
 
 const BlogForm = ({ createBlog }) => {
-  const title = useField('text')
-  const author = useField('text')
-  const url = useField('text')
-
-  const handleSubmit = async event => {
-    event.preventDefault()
-
+  const [form] = Form.useForm()
+  const handleSubmit = (values) => {
     createBlog({
-      title: title.value,
-      author: author.value,
-      url: url.value,
+      title: values.title,
+      author: values.author,
+      url: values.url
     })
 
-    title.reset()
-    author.reset()
-    url.reset()
+    form.resetFields()
   }
 
   return (
     <div>
-      <h2>create new</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          title: <input id="title" {..._.omit(title, ['reset'])}/>
-        </div>
-        <div>
-          author: <input id="author" {..._.omit(author, ['reset'])}/>
-        </div>
-        <div>
-          url: <input id="url" {..._.omit(url, ['reset'])}/>
-        </div>
-        <button type="submit" id="createBtn">create</button>
-      </form>
+      <Typography.Title level={2}>Create new blog</Typography.Title>
+      <Form
+        form={form}
+        name="basic"
+        onFinish={handleSubmit}
+        labelCol={{ span: 1 }}
+        wrapperCol={{ span: 10 }}
+      >
+        <Form.Item label="Title" name="title">
+          <Input/>
+        </Form.Item>
+        <Form.Item label="Author" name="author">
+          <Input/>
+        </Form.Item>
+        <Form.Item label="Url" name="url">
+          <Input/>
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
     </div>
   )
 }

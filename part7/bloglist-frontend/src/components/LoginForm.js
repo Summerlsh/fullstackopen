@@ -1,41 +1,76 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import _ from 'lodash'
+import { Form, Input, Button, Typography, notification } from 'antd'
+import { UserOutlined, LockOutlined } from '@ant-design/icons'
 
 import Notification from './Notification'
-import { useField } from '../hooks'
 import { login } from '../reducers/loginReducer'
 
 const LoginForm = () => {
-  const username = useField('text')
-  const password = useField('password')
-  const notification = useSelector(state => state.notification)
+  const notification = useSelector((state) => state.notification)
   const dispatch = useDispatch()
+  const [form] = Form.useForm()
 
-  const handleSubmit = async event => {
-    event.preventDefault()
+  const handleSubmit = (values) => {
+    dispatch(
+      login({
+        username: values.username,
+        password: values.password,
+      })
+    )
 
-    dispatch(login({
-      username: username.value,
-      password: password.value
-    }))
-    username.reset()
-    password.reset()
+    form.resetFields()
   }
 
   return (
-    <div>
-      <h2>log in to application</h2>
+    <div className="login-page">
+      <Typography.Title style={{ margin: 50 }}>Log in to application</Typography.Title>
       <Notification content={notification.message} type="error"/>
-      <form onSubmit={handleSubmit}>
-        <div>
-          username <input id="username" {..._.omit(username, ['reset'])}/>
-        </div>
-        <div>
-          password <input id="password" {..._.omit(password, ['reset'])}/>
-        </div>
-        <button type="submit" id="loginBtn">login</button>
-      </form>
+      <Form
+        size="large"
+        form={form}
+        className="login-form"
+        onFinish={handleSubmit}
+      >
+        <Form.Item
+          name="username"
+          rules={[
+            {
+              required: true,
+              message: 'Please input your Username!',
+            },
+          ]}
+        >
+          <Input
+            prefix={<UserOutlined className="site-form-item-icon"/>}
+            placeholder="Username"
+          />
+        </Form.Item>
+        <Form.Item
+          name="password"
+          rules={[
+            {
+              required: true,
+              message: 'Please input your Password!',
+            },
+          ]}
+        >
+          <Input
+            prefix={<LockOutlined className="site-form-item-icon"/>}
+            type="password"
+            placeholder="Password"
+          />
+        </Form.Item>
+        <Form.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="login-form-button"
+          >
+            Log in
+          </Button>
+        </Form.Item>
+      </Form>
     </div>
   )
 }

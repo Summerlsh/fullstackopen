@@ -1,9 +1,16 @@
-header {
-  background-color: #cccccc;
-  padding: 5px;
+@import '~antd/dist/antd.css';
+
+.login-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-header a,
-header span {
-  margin-right: 5px;
+.login-form {
+  width: 400px;
+}
+
+.login-form-button {
+  width: 100%;
 }
