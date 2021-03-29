@@ -1,10 +1,17 @@
-import React from 'react'
-import { useQuery } from '@apollo/client'
+import React, { useState } from 'react'
+import { useMutation, useQuery } from '@apollo/client'
+import Select from 'react-select'
 
-import { ALL_AUTHORS } from '../queries'
+import { ALL_AUTHORS, SET_AUTHOR_BORN } from '../queries'
 
 const Authors = (props) => {
+  const [name, setName] = useState(null)
+  const [born, setBorn] = useState('')
   const { loading, data } = useQuery(ALL_AUTHORS)
+  const [setAuthorBorn] = useMutation(SET_AUTHOR_BORN, {
+    refetchQueries: [{ query: ALL_AUTHORS }],
+  })
+  let selectRef
 
   if (!props.show) {
     return null
@@ -12,6 +19,17 @@ const Authors = (props) => {
   if (loading) {
     return <div>loading...</div>
   }
+
+  const handleClick = (e) => {
+    setAuthorBorn({ variables: { name: name.value, born: +born } })
+    selectRef.select.clearValue()
+    setBorn('')
+  }
+
+  const authorOptions = data.allAuthors.map((author) => ({
+    label: author.name,
+    value: author.name,
+  }))
 
   return (
     <div>
@@ -32,6 +50,25 @@ const Authors = (props) => {
           ))}
         </tbody>
       </table>
+
+      <h3>Set birthyear</h3>
+      <div>
+        <Select
+          defaultValue={name}
+          onChange={setName}
+          options={authorOptions}
+          ref={(ref) => (selectRef = ref)}
+        />
+      </div>
+      <div>
+        born
+        <input
+          type="number"
+          value={born}
+          onChange={({ target }) => setBorn(target.value)}
+        />
+      </div>
+      <button onClick={handleClick}>update author</button>
     </div>
   )
 }
