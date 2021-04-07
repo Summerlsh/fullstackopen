@@ -51,24 +51,28 @@ const Authors = (props) => {
         </tbody>
       </table>
 
-      <h3>Set birthyear</h3>
-      <div>
-        <Select
-          defaultValue={name}
-          onChange={setName}
-          options={authorOptions}
-          ref={(ref) => (selectRef = ref)}
-        />
-      </div>
-      <div>
-        born
-        <input
-          type="number"
-          value={born}
-          onChange={({ target }) => setBorn(target.value)}
-        />
-      </div>
-      <button onClick={handleClick}>update author</button>
+      {props.token && (
+        <div>
+          <h3>Set birthyear</h3>
+          <div>
+            <Select
+              defaultValue={name}
+              onChange={setName}
+              options={authorOptions}
+              ref={(ref) => (selectRef = ref)}
+            />
+          </div>
+          <div>
+            born
+            <input
+              type="number"
+              value={born}
+              onChange={({ target }) => setBorn(target.value)}
+            />
+          </div>
+          <button onClick={handleClick}>update author</button>
+        </div>
+      )}
     </div>
   )
 }
