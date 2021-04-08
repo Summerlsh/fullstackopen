@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { useApolloClient, useQuery } from '@apollo/client'
+import { useApolloClient, useQuery, useSubscription } from '@apollo/client'
 
 import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
 import LoginForm from './components/LoginForm'
 import Recommend from './components/Recommend'
-import { ME } from './queries'
+import { ME, BOOK_ADDED, ALL_BOOKS } from './queries'
 
 const App = () => {
   const [page, setPage] = useState('authors')
@@ -14,6 +14,25 @@ const App = () => {
   const [favoriteGenre, setFavoriteGenre] = useState('')
   const { data, refetch } = useQuery(ME)
   const client = useApolloClient()
+
+  const updateCacheWith = (addedBook) => {
+    const allBooksInCache = client.readQuery({ query: ALL_BOOKS }).allBooks
+    // 判断缓存中是否已存在addedBook
+    if (!allBooksInCache.map((book) => book.id).includes(addedBook.id)) {
+      client.writeQuery({
+        query: ALL_BOOKS,
+        data: { allBooks: allBooksInCache.concat(addedBook) },
+      })
+    }
+  }
+
+  useSubscription(BOOK_ADDED, {
+    onSubscriptionData: ({ subscriptionData }) => {
+      const addedBook = subscriptionData.data.bookAdded
+      alert(`a new book ${addedBook.title} has been added!`)
+      updateCacheWith(addedBook)
+    },
+  })
 
   useEffect(() => {
     setToken(localStorage.getItem('library-user-token'))
@@ -57,11 +76,19 @@ const App = () => {
 
       <Books show={page === 'books'} />
 
-      <LoginForm show={page === 'login'} setToken={setToken} setPage={setPage} />
+      <LoginForm
+        show={page === 'login'}
+        setToken={setToken}
+        setPage={setPage}
+      />
 
-      <NewBook show={page === 'add'} favoriteGenre={favoriteGenre}/>
+      <NewBook
+        show={page === 'add'}
+        favoriteGenre={favoriteGenre}
+        updateCacheWith={updateCacheWith}
+      />
 
-      <Recommend show={page === 'recommend'} genre={favoriteGenre}/>
+      <Recommend show={page === 'recommend'} genre={favoriteGenre} />
     </div>
   )
 }

@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/client'
 
 import { ALL_AUTHORS, ALL_BOOKS, CREATE_BOOK } from '../queries'
 
-const NewBook = ({ show, favoriteGenre }) => {
+const NewBook = ({ show, favoriteGenre, updateCacheWith }) => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [published, setPublished] = useState('')
@@ -15,14 +15,7 @@ const NewBook = ({ show, favoriteGenre }) => {
       { query: ALL_BOOKS, variables: { genre: favoriteGenre } },
     ],
     update: (cache, mutationResult) => {
-      const dataInStore = cache.readQuery({ query: ALL_BOOKS })
-      cache.writeQuery({
-        query: ALL_BOOKS,
-        data: {
-          ...dataInStore,
-          allBooks: [...dataInStore.allBooks, mutationResult.data.addBook],
-        },
-      })
+      updateCacheWith(mutationResult.data.addBook)
     },
   })
 
