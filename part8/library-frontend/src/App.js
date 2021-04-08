@@ -1,25 +1,40 @@
 import React, { useEffect, useState } from 'react'
-import { useApolloClient } from '@apollo/client'
+import { useApolloClient, useQuery } from '@apollo/client'
 
 import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
 import LoginForm from './components/LoginForm'
 import Recommend from './components/Recommend'
+import { ME } from './queries'
 
 const App = () => {
   const [page, setPage] = useState('authors')
   const [token, setToken] = useState('')
+  const [favoriteGenre, setFavoriteGenre] = useState('')
+  const { data, refetch } = useQuery(ME)
   const client = useApolloClient()
 
   useEffect(() => {
     setToken(localStorage.getItem('library-user-token'))
   }, [])
 
+  useEffect(() => {
+    refetch()
+  }, [token, refetch])
+
+  useEffect(() => {
+    if (data?.me) {
+      setFavoriteGenre(data.me.favoriteGenre)
+    }
+  }, [data])
+
   const handleLogout = () => {
     localStorage.removeItem('library-user-token')
     setToken('')
     client.resetStore()
+    // 登出后返回首页
+    setPage('authors')
   }
 
   return (
@@ -44,9 +59,9 @@ const App = () => {
 
       <LoginForm show={page === 'login'} setToken={setToken} setPage={setPage} />
 
-      <NewBook show={page === 'add'}/>
+      <NewBook show={page === 'add'} favoriteGenre={favoriteGenre}/>
 
-      <Recommend show={page === 'recommend'}/>
+      <Recommend show={page === 'recommend'} genre={favoriteGenre}/>
     </div>
   )
 }
