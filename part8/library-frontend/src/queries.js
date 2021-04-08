@@ -72,7 +72,6 @@ export const ME = gql`
     me {
       username
       favoriteGenre
-      id
     }
   }
 `

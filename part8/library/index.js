@@ -24,6 +24,8 @@ mongoose
     console.log('error connecting to mongodb: ', err.message)
   })
 
+mongoose.set('debug', true)
+
 const typeDefs = gql`
   type Author {
     name: String!
@@ -70,24 +72,19 @@ const typeDefs = gql`
 `
 
 const resolvers = {
-  Author: {
-    bookCount: (parent) => {
-      return Book.countDocuments({ author: parent.id })
-    }
-  },
   Query: {
-    bookCount: () => Book.countDocuments({}),
-    authorCount: () => Author.countDocuments({}),
+    bookCount: () => Book.countDocuments({}).exec(),
+    authorCount: () => Author.countDocuments({}).exec(),
     allBooks: (parent, args) => {
       // if (args.author) {
       //   res = res.filter(book => book.author === args.author)
       // }
       if (args.genre) {
-        return Book.find({ genres: { $in: args.genre } }).populate('author')
+        return Book.find({ genres: { $in: args.genre } }).populate('author').exec()
       }
-      return Book.find({}).populate('author')
+      return Book.find({}).populate('author').exec()
     },
-    allAuthors: () => Author.find({}),
+    allAuthors: () => Author.find({}).exec(),
     me: (parent, args, context) => context.currentUser
   },
   Mutation: {
@@ -98,27 +95,25 @@ const resolvers = {
       let author = await Author.findOne({ name: args.author })
       try {
         if (!author) {
-          const newAuthor = new Author({ name: args.author })
+          const newAuthor = new Author({ name: args.author, bookCount: 1 })
           author = await newAuthor.save()
+        } else {
+          author.bookCount++
+          await author.save()
         }
-      } catch (error) {
-        throw new UserInputError(error.message, {
-          invalidArgs: args
-        })
-      }
-      let book = new Book({ ...args, author: author._id })
-      try {
+        let book = new Book({ ...args, author: author._id })
         book = await book.save()
+
+        pubsub.publish('BOOK_ADDED', {
+          bookAdded: Book.populate(book, 'author')
+        })
+
+        return Book.populate(book, 'author')
       } catch (error) {
         throw new UserInputError(error.message, {
           invalidArgs: args
         })
       }
-
-      pubsub.publish('BOOK_ADDED', {
-        bookAdded: Book.populate(book, 'author')
-      })
-      return Book.populate(book, 'author')
     },
     editAuthor: async (parent, args, context) => {
       if (!context.currentUser) {
