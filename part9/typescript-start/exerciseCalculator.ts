@@ -29,8 +29,13 @@ const parseExerciseArgs = (args: string[]): ExerciseArguments => {
   }
 };
 
-const calculateExercises = (times: number[], target: number): Result => {
-  const average = times.reduce((acc, cur) => acc + cur) / times.length;
+export const calculateExercises = (
+  dailyExercises: number[],
+  target: number
+): Result => {
+  const average =
+    dailyExercises.reduce((acc, cur) => acc + cur, 0) / dailyExercises.length ||
+    0;
   let rating: number, ratingDescription: string;
   if (average < 1) {
     rating = 1;
@@ -44,8 +49,8 @@ const calculateExercises = (times: number[], target: number): Result => {
   }
 
   return {
-    periodLength: times.length,
-    trainingDays: times.filter((time) => time !== 0).length,
+    periodLength: dailyExercises.length,
+    trainingDays: dailyExercises.filter((time) => time !== 0).length,
     success: average >= target,
     rating,
     ratingDescription,
