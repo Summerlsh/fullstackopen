@@ -57,6 +57,8 @@ const calculateExercises = (times: number[], target: number): Result => {
 try {
   const { times, target } = parseExerciseArgs(process.argv);
   console.log(calculateExercises(times, target));
-} catch (e) {
-  console.log("Error, something bad happened, message: ", e.message);
+} catch (e: unknown) {
+  if (e instanceof Error) {
+    console.log("Error, something bad happened, message: ", e.message);
+  }
 }
