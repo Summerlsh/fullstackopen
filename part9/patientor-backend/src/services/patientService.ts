@@ -11,7 +11,7 @@ const getPatients = (): Patient[] => {
 }
 
 const getNonSsnPatients = (): NonSsnPatient[] => {
-  return patients.map(patient => omit(patient, ['ssn']))
+  return patients.map((patient) => omit(patient, ['ssn']))
 }
 
 const addPatient = (patient: NewPatient): Patient => {
