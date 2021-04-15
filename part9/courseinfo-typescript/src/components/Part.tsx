@@ -41,6 +41,18 @@ const Part = ({ part }: { part: CoursePart }) => {
           <span>project exercises {part.groupProjectCount}</span>
         </p>
       );
+    case "special":
+      return (
+        <p>
+          <strong>
+            {part.name} {part.exerciseCount}
+          </strong>
+          <br />
+          <span style={{ fontStyle: "italic" }}>{part.description}</span>
+          <br />
+          <span>required skills: {part.requirements.join(", ")}</span>
+        </p>
+      );
     default:
       return assertNever(part);
   }
