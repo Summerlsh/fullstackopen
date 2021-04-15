@@ -1,5 +1,5 @@
-import React from "react"
-import { CoursePart } from "../App"
+import React from "react";
+import { CoursePart } from "../App";
 
 const Content = ({ courseParts }: { courseParts: CoursePart[] }) => {
   return (
@@ -14,7 +14,7 @@ const Content = ({ courseParts }: { courseParts: CoursePart[] }) => {
         {courseParts[2].name} {courseParts[2].exerciseCount}
       </p>
     </>
-  )
-}
+  );
+};
 
-export default Content
+export default Content;

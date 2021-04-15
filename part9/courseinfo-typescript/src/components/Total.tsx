@@ -1,5 +1,5 @@
-import React from "react"
-import { CoursePart } from "../App"
+import React from "react";
+import { CoursePart } from "../App";
 
 const Total = ({ courseParts }: { courseParts: CoursePart[] }) => {
   return (
@@ -7,7 +7,7 @@ const Total = ({ courseParts }: { courseParts: CoursePart[] }) => {
       Number of exercises{" "}
       {courseParts.reduce((carry, part) => carry + part.exerciseCount, 0)}
     </p>
-  )
-}
+  );
+};
 
-export default Total
+export default Total;
