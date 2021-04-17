@@ -2,9 +2,7 @@ import { omit } from 'lodash'
 import { v1 as uuid } from 'uuid'
 
 import { Patient, NewPatient, PublicPatient } from '../types'
-import patientData from '../../data/patients.json'
-
-const patients = patientData as Patient[]
+import patients from '../../data/patients'
 
 const getPatients = (): Patient[] => {
   return patients

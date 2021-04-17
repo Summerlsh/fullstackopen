@@ -1,8 +1,8 @@
 import { Diagnose } from '../types'
-import diagnoseData from '../../data/diagnoses.json'
+import diagnoses from '../../data/diagnoses'
 
 const getDiagnoses = (): Diagnose[] => {
-  return diagnoseData
+  return diagnoses
 }
 
 export default { getDiagnoses }
