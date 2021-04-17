@@ -8,7 +8,7 @@ import { useStateValue, setPatientDetail } from "../state";
 import { Patient } from "../types";
 
 const PatientDetailPage = () => {
-  const [{ selectedPatient }, dispatch] = useStateValue();
+  const [{ selectedPatient, diagnoses }, dispatch] = useStateValue();
   const { id } = useParams<{ id: string }>();
   useEffect(() => {
     const fetchPatientDetail = async () => {
@@ -40,11 +40,14 @@ const PatientDetailPage = () => {
             <span style={{ fontStyle: "italic" }}>{entry.description}</span>
           </List.Item>
           <List.List as="ul">
-            {entry.diagnoseCodes?.map((code) => (
-              <List.Item as="li" key={code}>
-                {code}
-              </List.Item>
-            ))}
+            {entry.diagnoseCodes?.map((code) => {
+              const diagnose = diagnoses[code];
+              return (
+                <List.Item as="li" key={code}>
+                  {diagnose.code} {diagnose.name}
+                </List.Item>
+              );
+            })}
           </List.List>
         </Fragment>
       ))}
